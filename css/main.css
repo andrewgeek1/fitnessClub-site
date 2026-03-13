@@ -16,6 +16,19 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+.container {
+    width: 100%;
+    max-width: 1200px;   /* ширина контента */
+    margin: 0 auto;      /* центрирование */
+    padding: 0 20px;     /* внутренние отступы */
+}
+
+.container-wide{
+    max-width:1400px;
+    margin:0 auto;
+    padding:0 20px;
+}
+
 a {
     text-decoration: none;
     color: #fff;
