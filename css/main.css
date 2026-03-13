@@ -39,6 +39,8 @@ a {
     transition: color 0.3s ease;
 }
 
+/* ====================== TEXT ===================== */
+
 h1{
     font-size:48px;
     margin-bottom:30px;
@@ -63,8 +65,23 @@ p{
     max-width: 700px;
 }
 
+/* ===================== TOP BAR ===================== */
+
+.top-bar{
+    background:#2e3653;
+    font-size:14px;
+    padding:10px 0;
+}
+
+.top-info{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:#ddd;
+}
+
 /* ===================== HEADER ===================== */
-header {
+/* header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -80,6 +97,37 @@ header .logo {
     font-size: 28px;
     font-weight: bold;
     color: #e53935;
+} */
+
+.main-header{
+    background:#000000;
+    color:#000;
+    padding:20px 0;
+    /* position:sticky; // чтобы шапка сверху оставалась
+    top:0;
+    z-index:1000; */
+}
+
+.header-inner{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+}
+
+.menu{
+    display:flex;
+    gap:30px;
+    list-style:none;
+}
+
+.menu a{
+    color:#333;
+    font-weight:500;
 }
 
 header nav ul {
@@ -135,6 +183,8 @@ main {
     margin-bottom: 20px;
     color: #ddd;
 }
+
+
 
 /* ===================== TRAINERS ===================== */
 #trainers-list {
