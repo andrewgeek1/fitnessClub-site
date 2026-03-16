@@ -620,6 +620,129 @@ function initLogout() {
     });
 }
 
+/* ================= GUEST VISIT MODAL ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const guestBtn = document.getElementById("guest-btn");
+    const modal = document.getElementById("guest-modal");
+    const closeBtn = document.getElementById("modal-close");
+    const form = document.getElementById("guest-form");
+
+    if (!guestBtn || !modal || !form) return;
+
+    const nameInput = form.querySelector('input[type="text"]');
+    const phoneInput = form.querySelector('input[type="tel"]');
+
+    let message = document.createElement("div");
+    message.className = "form-message";
+    form.appendChild(message);
+
+    /* ===== открыть ===== */
+
+    guestBtn.addEventListener("click", () => {
+        modal.classList.add("active");
+    });
+
+    /* ===== закрыть ===== */
+
+    function closeModal(){
+        modal.classList.remove("active");
+        form.reset();
+        message.textContent = "";
+    }
+
+    closeBtn.addEventListener("click", closeModal);
+
+    modal.addEventListener("click",(e)=>{
+        if(e.target === modal){
+            closeModal();
+        }
+    });
+
+    /* ===== ограничения имени ===== */
+
+    nameInput.addEventListener("input", debounce(function () {
+
+        this.value = this.value
+            .replace(/[^a-zA-Zа-яА-Я\s]/g, '')
+            .slice(0,30);
+
+    },300));
+
+
+    /* ===== маска телефона ===== */
+
+    phoneInput.addEventListener("input", debounce(function(){
+
+        let digits = this.value.replace(/\D/g,'').slice(0,11);
+
+        let result = "+7";
+
+        if(digits.length > 1) result += " (" + digits.slice(1,4);
+        if(digits.length >= 4) result += ") " + digits.slice(4,7);
+        if(digits.length >= 7) result += "-" + digits.slice(7,9);
+        if(digits.length >= 9) result += "-" + digits.slice(9,11);
+
+        this.value = result;
+
+    },300));
+
+
+    /* ===== отправка ===== */
+
+    form.addEventListener("submit", e => {
+
+        e.preventDefault();
+
+        const cleanPhone = phoneInput.value.replace(/\D/g,'');
+
+        message.textContent = "";
+        message.className = "form-message";
+
+        if(nameInput.value.trim().length < 2){
+
+            message.textContent = "Введите корректное имя";
+            message.classList.add("error");
+            return;
+
+        }
+
+        if(cleanPhone.length !== 11){
+
+            message.textContent = "Телефон введён не полностью";
+            message.classList.add("error");
+            return;
+
+        }
+
+        const button = form.querySelector("button");
+
+        button.disabled = true;
+        button.innerHTML = '<span class="button-loader"></span>';
+
+        setTimeout(()=>{
+
+            services.requests.add({
+                name: nameInput.value.trim(),
+                phone: cleanPhone
+            });
+
+            message.textContent = "✅ Заявка отправлена";
+            message.className = "form-message success";
+
+            button.disabled = false;
+            button.textContent = "Записаться";
+
+            setTimeout(closeModal,1000);
+
+        },800);
+
+    });
+
+});
+
+
 /* ================= UTILS ================= */
 
 function debounce(fn, delay = 300) {
