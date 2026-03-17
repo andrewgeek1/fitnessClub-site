@@ -210,73 +210,174 @@ main {
 
 /* ===================== Модальное окно ===================== */
 
+/* ===== OVERLAY ===== */
 .modal{
     position: fixed;
     inset: 0;
-    background:rgba(0,0,0,0.7);
+
+    background: rgba(0,0,0,0.6);
+
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+
     opacity: 0;
-    pointer-events: none;
-    transition: .3s;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+    z-index: 1000;
 }
 
+/* активное состояние */
 .modal.active{
-    opacity:1;
-    pointer-events:auto;
+    opacity: 1;
+    visibility: visible;
 }
 
-.modal-content{
-    background:#1e1e1e;
-    padding:40px;
-    border-radius:12px;
-    width:400px;
-    position:relative;
-}
-
-.modal-content input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-}
-
-.modal-content button{
-    width:100%;
-    padding:12px;
-    background:#ff4d6d;
-    border:none;
-    color:white;
-    cursor:pointer;
-}
-
-.modal-close{
-    position:absolute;
-    top:10px;
-    right:10px;
-    background:none;
-    border:none;
-    color:white;
-    font-size:20px;
-    cursor:pointer;
-}
-
-
+/* ===== CONTENT ===== */
 .modal-content{
     position: relative;
+
+    width: 100%;
+    max-width: 420px;
+
+    background: #1e1e1e;
+    color: #fff;
+
+    padding: 30px 25px;
+
+    border-radius: 16px;
+
+    transform: translateY(20px) scale(0.98);
+    transition: 0.3s ease;
+
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
 }
 
+/* анимация появления */
+.modal.active .modal-content{
+    transform: translateY(0) scale(1);
+}
+
+/* ===== CLOSE BUTTON ===== */
 .modal-close{
-    position:absolute;
-    top:12px;
-    right:12px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
 
-    border:none;
-    background:none;
+    width: 34px;
+    height: 34px;
 
-    font-size:22px;
-    cursor:pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+
+    border-radius: 50%;
+    cursor: pointer;
+
+    font-size: 18px;
+
+    transition: 0.2s;
 }
+
+.modal-close:hover{
+    background: #ff4d6d;
+}
+
+/* ===== TITLE ===== */
+.modal-content h2{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ===== FORM ===== */
+#guest-form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* input */
+#guest-form input{
+    padding: 12px 14px;
+
+    border-radius: 8px;
+    border: none;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+/* фокус */
+#guest-form input:focus{
+    box-shadow: 0 0 0 2px #ff4d6d;
+}
+
+/* ===== BUTTON ===== */
+#guest-form button{
+    padding: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #ff4d6d;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#guest-form button:hover{
+    background: #ff3355;
+}
+
+#guest-form button:disabled{
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ===== MESSAGE ===== */
+.form-message{
+    text-align: center;
+    font-size: 13px;
+}
+
+.form-message.success{
+    color: #4caf50;
+}
+
+.form-message.error{
+    color: #ff4d6d;
+}
+
+/* ===== LOADER ===== */
+.button-loader{
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+
+    border-radius: 50%;
+
+    display: inline-block;
+
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+    to{
+        transform: rotate(360deg);
+    }
+}
+
 
 
 

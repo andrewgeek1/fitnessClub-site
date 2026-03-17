@@ -642,6 +642,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     guestBtn.addEventListener("click", () => {
         modal.classList.add("active");
+
+        setTimeout(() => nameInput.focus(), 100);
     });
 
     /* ===== закрыть ===== */
@@ -657,6 +659,12 @@ document.addEventListener("DOMContentLoaded", () => {
     modal.addEventListener("click",(e)=>{
         if(e.target === modal){
             closeModal();
+        }
+    });
+
+    document.addEventListener("keydown", (e)=>{
+        if(e.key === "Escape" && modal.classList.contains("active")){
+            closeModal(); 
         }
     });
 
