@@ -49,6 +49,17 @@ document.addEventListener('DOMContentLoaded', function () {
         controllers.menu.update();
         location.hash = '#home';
     });
+
+    const swiper = new Swiper('.hero-slider', {
+  loop: true,
+  autoplay: {
+    delay: 4000,
+  },
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+    });
 });
 
 
@@ -655,6 +666,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.remove("modal-open");
         form.reset();
         message.textContent = "";
+
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+        }
     }
 
     closeBtn.addEventListener("click", closeModal);

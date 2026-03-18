@@ -11,6 +11,8 @@
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
 
     <link rel="stylesheet" href="css/main.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
 </head>
 <body>
 
@@ -62,7 +64,34 @@
 <main>
     <div class="container">
         <section id="home" class="page active">
-                <h1>Главная</h1>
+
+            <h1>ФИТНЕС-КЛУБ<br>ПРЕМИУМ КЛАССА</h1>
+
+            <!-- СЛАЙДЕР -->
+            <div class="hero-slider swiper">
+
+                <div class="swiper-wrapper">
+
+                    <!-- Слайд 1 -->
+                    <div class="swiper-slide">
+                        <div class="slide-card">
+                        <img src="assets/images/main.jpg" alt="Приветственное фото">
+                        </div>
+                    </div>
+
+                    <!-- Слайд 2 -->
+                    <div class="swiper-slide">
+                        <div class="slide-card">
+                        <img src="assets/images/main term.jpg" alt="Приветственное фото 2">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ТОЧКИ -->
+                <div class="swiper-pagination"></div>
+
+    </div>
+
         </section>
 
             <section id="prices" class="page"></section>
@@ -76,6 +105,9 @@
             <section id="login" class="page"></section>
             <section id="admin" class="page"></section>
     </div>
+
+
+    
 </main>
 
 
@@ -111,6 +143,7 @@
 <script src="js/data.js"></script>
 <script src="js/router.js"></script>
 <script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
 </body>
 </html>
