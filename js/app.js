@@ -641,7 +641,9 @@ document.addEventListener("DOMContentLoaded", () => {
     /* ===== открыть ===== */
 
     guestBtn.addEventListener("click", () => {
+        lastFocusedElement = document.activeElement;
         modal.classList.add("active");
+        document.body.classList.add("modal-open");
 
         setTimeout(() => nameInput.focus(), 100);
     });
@@ -650,6 +652,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function closeModal(){
         modal.classList.remove("active");
+        document.body.classList.remove("modal-open");
         form.reset();
         message.textContent = "";
     }
