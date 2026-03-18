@@ -1,5 +1,4 @@
 /* ================= INIT ================= */
-
 document.addEventListener('DOMContentLoaded', function () {
     // инициализация state из storage
     state.user = storage.getUser();
@@ -50,16 +49,27 @@ document.addEventListener('DOMContentLoaded', function () {
         location.hash = '#home';
     });
 
-    const swiper = new Swiper('.hero-slider', {
-  loop: true,
-  autoplay: {
-    delay: 4000,
-  },
-  pagination: {
-    el: '.swiper-pagination',
-    clickable: true,
-  },
-    });
+        const swiper = new Swiper('.hero-slider', {
+        loop: true,
+        speed: 1200,
+
+        autoplay: {
+            delay: 10000,
+            disableOnInteraction: false,
+        },
+
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+
+        effect: 'fade',
+        fadeEffect: {
+            crossFade: true
+        },
+
+        
+        });
 });
 
 

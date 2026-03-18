@@ -209,6 +209,135 @@ main {
     color: #ddd;
 }
 
+/* ================= HERO SLIDER ================= */
+
+.hero-slider {
+    width: 100%;
+    height: auto;
+    border-radius: 40px 0 40px 0; /* необычные углы */
+    overflow: hidden;
+    position: relative;
+}
+
+/* Картинка */
+.hero-slider img {
+    transition: transform 6s ease; /* лёгкий zoom эффект */
+}
+
+
+
+/* Затемнение (премиум эффект) */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0.1)
+    );
+}
+
+.slide-card {
+    position: relative;
+}
+
+
+.slide-card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+
+    transition: transform 8s ease;
+}
+
+.swiper {
+    overflow: hidden;
+}
+
+.swiper-slide {
+    opacity: 0 !important;
+    transition: opacity 1s ease;
+}
+
+.swiper-slide-active {
+    opacity: 1 !important;
+}
+
+
+
+/* ================= ТОЧКИ (ПАГИНАЦИЯ) ================= */
+
+
+.swiper-pagination {
+    position: absolute !important;
+
+    top: 20px !important;
+    right: 20px !important;
+
+    left: auto !important;
+    bottom: auto !important;
+
+    width: auto !important;
+
+    display: flex;
+    flex-direction: column; 
+    gap: 14px;
+
+    z-index: 20;
+}
+
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+
+    opacity: 1;
+
+    transition: all 0.4s ease;
+}
+
+/* активная */
+.swiper-pagination-bullet-active {
+    height: 28px;
+    width: 12px;
+
+    border-radius: 10px;
+
+    background: #fff;
+    box-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+
+
+/* ================= АДАПТИВ ================= */
+
+@media (max-width: 768px) {
+
+    .hero-slider {
+        height: 260px;
+        border-radius: 20px;
+    }
+
+    .swiper-pagination {
+        top: 10px !important;
+        right: 10px !important;
+        gap: 10px;
+    }
+
+    .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+    }
+
+    .swiper-pagination-bullet-active {
+        height: 18px;
+    }
+}
+
 
 
 
