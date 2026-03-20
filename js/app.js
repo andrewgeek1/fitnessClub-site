@@ -645,12 +645,12 @@ function initLogout() {
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const guestBtn = document.getElementById("guest-btn");
+    const guestButtons = document.querySelectorAll('[data-open-modal="guest"]');
     const modal = document.getElementById("guest-modal");
     const closeBtn = document.getElementById("modal-close");
     const form = document.getElementById("guest-form");
 
-    if (!guestBtn || !modal || !form) return;
+    if (!guestButtons.length || !modal || !form) return;
 
     const nameInput = form.querySelector('input[type="text"]');
     const phoneInput = form.querySelector('input[type="tel"]');
@@ -658,15 +658,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let message = document.createElement("div");
     message.className = "form-message";
     form.appendChild(message);
+    let lastFocusedElement = null;
 
     /* ===== открыть ===== */
 
-    guestBtn.addEventListener("click", () => {
+    function openModal() {
         lastFocusedElement = document.activeElement;
         modal.classList.add("active");
         document.body.classList.add("modal-open");
 
         setTimeout(() => nameInput.focus(), 100);
+    }
+
+    guestButtons.forEach(button => {
+        button.addEventListener("click", openModal);
     });
 
     /* ===== закрыть ===== */

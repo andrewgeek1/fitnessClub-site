@@ -3,43 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Fitness Club — фитнес и тренировки</title>
-
-    <meta name="description" content="Fitness Club — тренировки, расписание, персональные тренеры и запись онлайн. Современный фитнес-клуб.">
-
+    <title>Fitness Club - фитнес и тренировки</title>
+    <meta name="description" content="Fitness Club - тренировки, расписание, персональные тренеры и запись онлайн.">
     <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-
     <link rel="stylesheet" href="css/main.css">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 </head>
 <body>
-
 <div class="top-bar">
-    <div class="container">
-        <div class="top-info">
-
-            <div class="address">
-                 Нижний Новгород, пр. Гагарина, 35
-            </div>
-
-            <div class="phone">
-                 8 (831) 2-172-172
-            </div>
-
-            <div class="worktime">
-                Пн-Пт 6:30-23:00
-            </div>
-
-        </div>
+    <div class="container top-info">
+        <div>Нижний Новгород, пр. Гагарина, 35</div>
+        <div>8 (831) 2-172-172</div>
+        <div>Пн-Пт 6:30-23:00</div>
     </div>
 </div>
 
 <header class="main-header">
-
     <div class="container header-inner">
-
         <div class="logo"><a href="#home">Fitness Club</a></div>
 
         <nav>
@@ -54,88 +34,119 @@
             </ul>
         </nav>
 
-        <button class="guest-btn" id="guest-btn">
-            Гостевой визит
-        </button>
-
+        <button class="guest-btn" id="guest-btn" data-open-modal="guest">Гостевой визит</button>
     </div>
 </header>
 
 <main>
-    <div class="container">
-        <section id="home" class="page active">
-
-            <h1>ФИТНЕС-КЛУБ<br>ПРЕМИУМ КЛАССА</h1>
-
-            <!-- СЛАЙДЕР -->
-            <div class="hero-slider swiper">
-
-                <div class="swiper-wrapper">
-
-                    <!-- Слайд 1 -->
-                    <div class="swiper-slide">
-                        <div class="slide-card">
-                        <img src="assets/images/main.jpg" alt="Приветственное фото">
-                        </div>
-                    </div>
-
-                    <!-- Слайд 2 -->
-                    <div class="swiper-slide">
-                        <div class="slide-card">
-                        <img src="assets/images/main term.jpg" alt="Приветственное фото 2">
-                        </div>
-                    </div>
+    <section id="home" class="page active home-page">
+        <section class="home-block home-block--hero">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="hero-kicker">Премиальный клуб</p>
+                    <h1>ФИТНЕС-КЛУБ<br>ПРЕМИУМ КЛАССА</h1>
+                    <p class="hero-lead">Пространство с современными тренажерами, персональными программами и тренерами.</p>
                 </div>
 
-                <!-- ТОЧКИ -->
-                <div class="swiper-pagination"></div>
-
-    </div>
-
+                <div class="hero-slider swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <div class="slide-card">
+                                <img src="assets/images/main.jpg" alt="Зал фитнес-клуба">
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="slide-card">
+                                <img src="assets/images/main term.jpg" alt="Тренажерный зал">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
         </section>
 
-            <section id="prices" class="page"></section>
-            <section id="schedule" class="page"></section>
-            <section id="trainers" class="page">
+        <section class="home-block home-block--light">
+            <div class="container about-grid">
+                <div>
+                    <h2>О клубе</h2>
+                    <p>Удобное расположение, просторные зоны тренировок, профессиональная команда и поддержка на каждом этапе.</p>
+                </div>
+                <div class="about-metrics">
+                    <article>
+                        <strong>2500 м²</strong>
+                        <span>Площадь клуба</span>
+                    </article>
+                    <article>
+                        <strong>50+</strong>
+                        <span>Групповых программ</span>
+                    </article>
+                    <article>
+                        <strong>7/7</strong>
+                        <span>Режим работы</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="home-block home-block--soft">
+            <div class="container benefits-grid">
+                <article class="benefit-card">
+                    <h3>Кардио-зона</h3>
+                    <p>Беговые дорожки, эллипсы и велотренажеры с современными программами нагрузки.</p>
+                </article>
+                <article class="benefit-card">
+                    <h3>Силовая зона</h3>
+                    <p>Полный набор свободных весов и силовых станций для любого уровня подготовки.</p>
+                </article>
+                <article class="benefit-card">
+                    <h3>Персональные тренировки</h3>
+                    <p>Индивидуальный план, контроль техники и регулярный прогресс по вашим целям.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="home-block home-block--dark">
+            <div class="container cta-row">
+                <div>
+                    <h2>Начните тренироваться уже сегодня</h2>
+                    <p>Оставьте контакты - подберем формат занятий и удобный тариф.</p>
+                </div>
+                <button class="guest-btn guest-btn--light" data-open-modal="guest">Заказать звонок</button>
+            </div>
+        </section>
+    </section>
+
+    <section id="prices" class="page page-shell"></section>
+    <section id="schedule" class="page page-shell"></section>
+    <section id="trainers" class="page page-shell">
+        <div class="container">
             <h1>Тренеры</h1>
             <div id="trainers-list"></div>
-            </section>
-            <section id="contacts" class="page"></section>
+        </div>
+    </section>
+    <section id="contacts" class="page page-shell"></section>
 
-            <section id="login" class="page"></section>
-            <section id="admin" class="page"></section>
-    </div>
-
-
-    
+    <section id="login" class="page page-shell"></section>
+    <section id="admin" class="page page-shell"></section>
 </main>
 
-
 <div class="modal" id="guest-modal">
-
-  <div class="modal-content">
-
-    <div class="modal-close" id="modal-close">✕</div>
-
-    <h2>Гостевой визит</h2>
-
-    <form id="guest-form">
-
-        <input type="text" placeholder="Ваше имя" required>
-
-        <input type="tel" placeholder="+7 (___) ___-__-__" required>
-
-        <button type="submit">Записаться</button>
-
-    </form>
-
-  </div>
-
+    <div class="modal-content">
+        <div class="modal-close" id="modal-close">✕</div>
+        <h2>Гостевой визит</h2>
+        <form id="guest-form">
+            <input type="text" placeholder="Ваше имя" required>
+            <input type="tel" placeholder="+7 (___) ___-__-__" required>
+            <button type="submit">Записаться</button>
+        </form>
+    </div>
 </div>
 
 <footer>
-    <div class="container">
-    <p>© Fitness Club</p>
+    <div class="container footer-inner">
+        <p>© Fitness Club</p>
+        <p>Нижний Новгород, пр. Гагарина, 35</p>
     </div>
 </footer>
 
@@ -143,7 +154,5 @@
 <script src="js/data.js"></script>
 <script src="js/router.js"></script>
 <script src="js/app.js"></script>
-
-
 </body>
 </html>
