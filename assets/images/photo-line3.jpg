@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link href="/bitrix/cache/css/s1/main/template_159c62ee444f149802390df1caa3cfbd/template_159c62ee444f149802390df1caa3cfbd_v1.css?1763027324128701" type="text/css"  data-template-style="true" rel="stylesheet" />
+<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=1CTOxiBYpxGD1RShV3JfVjGoo2s_QKufyMV8xbR7dSqRLUPwSp4NT17CHqDHJgWbBwjgpgkzkUdiV2JTjb_ExneJBQp1UtHkW8PaV8bK4NnQoHOtRn1qzkn_VkPaUgW3" charset="UTF-8"></script><script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
+<script>(window.BX||top.BX).message({"JS_CORE_LOADING":"Загрузка...","JS_CORE_NO_DATA":"- Нет данных -","JS_CORE_WINDOW_CLOSE":"Закрыть","JS_CORE_WINDOW_EXPAND":"Развернуть","JS_CORE_WINDOW_NARROW":"Свернуть в окно","JS_CORE_WINDOW_SAVE":"Сохранить","JS_CORE_WINDOW_CANCEL":"Отменить","JS_CORE_WINDOW_CONTINUE":"Продолжить","JS_CORE_H":"ч","JS_CORE_M":"м","JS_CORE_S":"с","JSADM_AI_HIDE_EXTRA":"Скрыть лишние","JSADM_AI_ALL_NOTIF":"Показать все","JSADM_AUTH_REQ":"Требуется авторизация!","JS_CORE_WINDOW_AUTH":"Войти","JS_CORE_IMAGE_FULL":"Полный размер"});</script>
+
+<script src="/bitrix/js/main/core/core.min.js?1727203042225422"></script>
+
+<script>BX.Runtime.registerExtension({"name":"main.core","namespace":"BX","loaded":true});</script>
+<script>BX.setJSList(["\/bitrix\/js\/main\/core\/core_ajax.js","\/bitrix\/js\/main\/core\/core_promise.js","\/bitrix\/js\/main\/polyfill\/promise\/js\/promise.js","\/bitrix\/js\/main\/loadext\/loadext.js","\/bitrix\/js\/main\/loadext\/extension.js","\/bitrix\/js\/main\/polyfill\/promise\/js\/promise.js","\/bitrix\/js\/main\/polyfill\/find\/js\/find.js","\/bitrix\/js\/main\/polyfill\/includes\/js\/includes.js","\/bitrix\/js\/main\/polyfill\/matches\/js\/matches.js","\/bitrix\/js\/ui\/polyfill\/closest\/js\/closest.js","\/bitrix\/js\/main\/polyfill\/fill\/main.polyfill.fill.js","\/bitrix\/js\/main\/polyfill\/find\/js\/find.js","\/bitrix\/js\/main\/polyfill\/matches\/js\/matches.js","\/bitrix\/js\/main\/polyfill\/core\/dist\/polyfill.bundle.js","\/bitrix\/js\/main\/core\/core.js","\/bitrix\/js\/main\/polyfill\/intersectionobserver\/js\/intersectionobserver.js","\/bitrix\/js\/main\/lazyload\/dist\/lazyload.bundle.js","\/bitrix\/js\/main\/polyfill\/core\/dist\/polyfill.bundle.js","\/bitrix\/js\/main\/parambag\/dist\/parambag.bundle.js"]);
+</script>
+<script>BX.Runtime.registerExtension({"name":"fx","namespace":"window","loaded":true});</script>
+<script>(window.BX||top.BX).message({"LANGUAGE_ID":"ru","FORMAT_DATE":"DD.MM.YYYY","FORMAT_DATETIME":"DD.MM.YYYY HH:MI:SS","COOKIE_PREFIX":"BITRIX_SM","SERVER_TZ_OFFSET":"10800","UTF_MODE":"Y","SITE_ID":"s1","SITE_DIR":"\/","USER_ID":"","SERVER_TIME":1774376105,"USER_TZ_OFFSET":0,"USER_TZ_AUTO":"Y","bitrix_sessid":"b5b992361e1c733e48aa2f1602ceb317"});</script>
+
+
+<script  src="/bitrix/cache/js/s1/main/kernel_main/kernel_main_v1.js?1763027407167374"></script>
+<script src="/bitrix/js/yandex.metrika/script.js?16920362416603"></script>
+<script>BX.setJSList(["\/bitrix\/js\/main\/core\/core_fx.js","\/bitrix\/js\/main\/session.js","\/bitrix\/js\/main\/pageobject\/pageobject.js","\/bitrix\/js\/main\/core\/core_window.js","\/bitrix\/js\/main\/date\/main.date.js","\/bitrix\/js\/main\/core\/core_date.js","\/bitrix\/js\/main\/utils.js","\/local\/templates\/main\/js\/jquery-3.6.0.js","\/local\/templates\/main\/plugins\/slick\/slick.min.js","\/local\/templates\/main\/plugins\/swiper\/swiper-bundle.min.js","\/local\/templates\/main\/plugins\/fancybox\/jquery.fancybox.min.js","\/local\/templates\/main\/js\/script.js"]);</script>
+<script>BX.setCSSList(["\/local\/templates\/main\/css\/bootstrap-grid.min.css","\/local\/templates\/main\/plugins\/slick\/slick.css","\/local\/templates\/main\/plugins\/slick\/slick-theme.css","\/local\/templates\/main\/css\/fonts\/montserrat\/stylesheet.css","\/local\/templates\/main\/plugins\/swiper\/swiper-bundle.min.css","\/local\/templates\/main\/plugins\/fancybox\/jquery.fancybox.min.css","\/local\/templates\/main\/css\/style.css"]);</script>
+        <script type="text/javascript">
+            window.counters = [];
+        </script>
+        
+<script>window[window.dataLayerName] = window[window.dataLayerName] || [];</script>
+
+
+
+<script  src="/bitrix/cache/js/s1/main/template_713958841d3317d277c5357aba75aa78/template_713958841d3317d277c5357aba75aa78_v1.js?1763027324346050"></script>
+<script>var _ba = _ba || []; _ba.push(["aid", "6d1bd7920f788626a6538c80e1e8bf42"]); _ba.push(["host", "safari-sports.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
+
+
+		<title>Страница не найдена</title>
+		
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		
+		<link rel="shortcut icon" type="image/png" href="/favicon.ico">
+		
+				<!-- calltouch -->
+		<script>
+		(function(w,d,n,c){w.CalltouchDataObject=n;w[n]=function(){w[n]["callbacks"].push(arguments)};if(!w[n]["callbacks"]){w[n]["callbacks"]=[]}w[n]["loaded"]=false;if(typeof c!=="object"){c=[c]}w[n]["counters"]=c;for(var i=0;i<c.length;i+=1){p(c[i])}function p(cId){var a=d.getElementsByTagName("script")[0],s=d.createElement("script"),i=function(){a.parentNode.insertBefore(s,a)},m=typeof Array.prototype.find === 'function',n=m?"init-min.js":"init.js";s.async=true;s.src="https://mod.calltouch.ru/"+n+"?id="+cId;if(w.opera=="[object Opera]"){d.addEventListener("DOMContentLoaded",i,false)}else{i()}}})(window,document,"ct","xrgy82f6");
+		</script>
+		<!-- calltouch -->
+	</head>
+	<body class="js-body">
+				<!— Top.Mail.Ru counter —>
+		<script type="text/javascript">
+		var _tmr = window._tmr || (window._tmr = []);
+		_tmr.push({id: "3384255", type: "pageView", start: (new Date()).getTime()});
+		(function (d, w, id) {
+		if (d.getElementById(id)) return;
+		var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+		ts.src = "https://top-fwz1.mail.ru/js/code.js";
+		var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+		if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+		})(document, window, "tmr-code");
+		</script>
+		<noscript><div><img src="https://top-fwz1.mail.ru/counter?id=3384255;js=na" style="position:absolute;left:-9999px;" alt="Top.Mail.Ru" /></div></noscript>
+		<!— /Top.Mail.Ru counter —>
+		
+		<!— Yandex.Metrika counter —>
+		<script type="text/javascript" >
+		(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+		m[i].l=1*new Date();
+		for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+		k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+		(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+		ym(60249601, "init", {
+		clickmap:true,
+		trackLinks:true,
+		accurateTrackBounce:true,
+		webvisor:true,
+		ecommerce:"dataLayer"
+		});
+		</script>
+		<noscript><div><img src="https://mc.yandex.ru/watch/60249601" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+		<!— /Yandex.Metrika counter —>
+		<script type="text/javascript">
+			var digiScript = document.createElement ('script');
+			digiScript.src = '//aq.dolyame.ru/6127/client.js?ts=' + Date.now();
+			digiScript.defer = true;
+			digiScript.async = true;
+			document.body.appendChild (digiScript);
+		</script>
+		        <header class="header">
+            <div class="container">
+				<div class="row">
+				    <div class="col-lg-12 header-desctop">
+						
+	<ul class="main-menu">
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link header-phone" href="tel:88005008855">8 (800) 500-88-55</a>
+							</li>
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link " href="/#schedule">Расписание</a>
+							</li>
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link " href="/#price">стоимость</a>
+							</li>
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link " href="/clubkosareva/">Клуб Косарева</a>
+							</li>
+					<li class="main-menu__item main-menu__item-logo js-header-logo-btn">
+									<img src="/local/templates/main/img/logo.png">							</li>
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link " href="/#teachers">тренеры</a>
+							</li>
+					<li class="main-menu__item ">
+														<a class="main-menu__item-link " href="/knyazvladimir/">клуб единоборств</a>
+							</li>
+					<li class="main-menu__item js-freeze-card">
+														<a class="main-menu__item-link " href="#">заморозка карты</a>
+							</li>
+					<li class="main-menu__item header-call js-call-me">
+									Заказать звонок							</li>
+			</ul>
+                    </div>
+					<div class="col-lg-12 header-mobile">
+						
+
+<img class="header-logo js-header-logo-btn" src="/local/templates/main/img/logo.png">
+	<a class="header-phone" href="tel:88005008855">8 (800) 500-88-55</a>
+<div class="mobile-menu-btn js-mobile-menu-btn">
+	<div class="line"></div>
+	<div class="line"></div>
+	<div class="line"></div>
+</div>
+<div class="mobile-menu-container-wrapper">
+	<div class="mobile-menu-container">
+					<ul class="main-menu">
+									<li class="main-menu__item js-mobile-menu-btn "><a class="main-menu__item-link" href="/#schedule">Расписание</a></li>
+									<li class="main-menu__item js-mobile-menu-btn "><a class="main-menu__item-link" href="/#price">стоимость</a></li>
+									<li class="main-menu__item js-mobile-menu-btn "><a class="main-menu__item-link" href="/#teachers">тренеры</a></li>
+									<li class="main-menu__item js-mobile-menu-btn js-freeze-card"><a class="main-menu__item-link" href="">заморозка карты</a></li>
+									<li class="main-menu__item js-mobile-menu-btn "><a class="main-menu__item-link" href="/knyazvladimir/">клуб единоборств</a></li>
+									<li class="main-menu__item js-mobile-menu-btn "><a class="main-menu__item-link" href="/clubkosareva/">Клуб Косарева</a></li>
+							</ul>
+				<div class="bottom-menu">
+							<div><a class="header-phone-mobile js-mobile-menu-btn" href="tel:88005008855">8 (800) 500-88-55</a></div>
+						<div class="header-call js-mobile-menu-btn js-call-me">Заказать звонок</div>
+		</div>
+	</div>
+</div>					</div>
+				</div>
+			</div>
+        </header><section class="section not-found">
+	<div class="container container-default">
+		<div class="row">
+			<div class="col-lg-12">
+				<p>Страница не найдена. Вы можете вернуться на <a href="/">главную</a></p>
+			</div>
+		</div>
+	</div>
+</section>
+		<footer class="footer">
+            <div class="container">
+				<div class="row">
+					<div class="col-lg-12 footer-row">
+						<div class="footer-logo-wrapper">
+							<img class="footer-logo" src="/local/templates/main/img/logo.png">
+						</div>
+						
+	<ul class="footer-menu">
+					<li class="footer-menu__item ">
+				<a class="footer-menu__item-link" href="/#schedule">Расписание</a>
+			</li>
+					<li class="footer-menu__item ">
+				<a class="footer-menu__item-link" href="/#price">стоимость</a>
+			</li>
+					<li class="footer-menu__item ">
+				<a class="footer-menu__item-link" href="/#teachers">тренеры</a>
+			</li>
+					<li class="footer-menu__item js-freeze-card">
+				<a class="footer-menu__item-link" href="">заморозка карты</a>
+			</li>
+					<li class="footer-menu__item ">
+				<a class="footer-menu__item-link" href="/knyazvladimir/">клуб единоборств</a>
+			</li>
+					<li class="footer-menu__item ">
+				<a class="footer-menu__item-link" href="/clubkosareva/">Клуб Косарева</a>
+			</li>
+			</ul>
+					</div>
+									</div>
+				<div class="row footer-bottom">
+					<div class="col-lg-7">
+							<ul class="bottom-menu">
+									<li class="bottom-menu__item"><a class="bottom-menu__item-link" target="_blank" href="/upload/iblock/154/qy4kxriic469bibvksl9313w34j6lkyt.pdf">Правила клуба</a></li>
+												<li class="bottom-menu__item"><a class="bottom-menu__item-link" target="_blank" href="/upload/iblock/8de/t5en3n9so1c2tfr0x4rou4xt3d1cnm5u.pdf">Договор оферты</a></li>
+												<li class="bottom-menu__item"><a class="bottom-menu__item-link" target="_blank" href="/upload/iblock/68e/80kllup25cxbcsjc47afiqbdh2h31sgv.pdf">Политика обработки персональных данных</a></li>
+						</ul>
+					</div>
+					<div class="col-lg-5">
+						<div class="copyrights">2010-2026 © SafariSport. All right reserved</div>
+					</div>
+					<div class="footer-bottom-bg-text"></div>
+				</div>
+            </div>
+		</footer>
+		<link rel="stylesheet" href="/local/templates/main/css/wheel.css?1774376105">
+<script>
+	function showWheelForm() {
+		$.fancybox.open({
+			src: "/ajax/wheel.php",
+			type: "ajax",
+			touch: false,
+			ajax: {
+				settings: {
+					type: "POST",
+				}
+			},
+			beforeShow: function() {
+				$('.fancybox-bg').addClass('fancybox-bg_grey');
+			},
+		});
+	}
+	
+	function wheelForm() {
+		var isWheelFormFilled = getCookie('isWheelFormFilled'),
+			maxAge = 365*86400;
+
+		if (isWheelFormFilled !== "true") {
+			showWheelForm();
+		}
+	}
+	
+	var canDrawWheel = true,
+		isFormWheelFilled = getCookie('isWheelFormFilled');
+	if (
+		(isFormWheelFilled === true) ||
+		(isFormWheelFilled === 'true') ||
+		(isFormWheelFilled === 1) ||
+		(isFormWheelFilled === '1')
+	) {
+		canDrawWheel = false;
+	}
+	if (canDrawWheel) {
+		setTimeout(
+			wheelForm,
+			5000
+		);
+	}
+	
+	$(document).on("change", ".js-fortune-wheel-rules-input", function(e) {
+		checkCanUseWheel();
+	});
+	
+	function checkCanUseWheel() {
+		var phone = $('.js-wheel-form-phone').val(),
+			phoneNumberCount = phone.replace(/[^0-9]/g,"").length;
+		if (
+			(phoneNumberCount === 11) &&
+			$('.js-fortune-wheel-rules-input').is(':checked')
+		) {
+			$('.js-fortune-wheel-action-item-run-btn').prop('disabled', false);
+		} else {
+			$('.js-fortune-wheel-action-item-run-btn').prop('disabled', true);
+		}
+	}
+	
+	function drawWheel() {
+		const prizes = [{'text':'Скидка 10% на абонемент — получите выгодную цену на тренировочный пакет!','htmlStr':'<span class=\"fortune-wheel__text-big\">Скидка 10%<\/span><br> получите выгодную цену<br> на тренировочный пакет!','color':'hsl(40 93% 79%)','textColor':'#000000','width':'260px'},{'text':'Неделя тренировок бесплатно — пробуйте без ограничений весь наш зал в течение 7 дней','htmlStr':'<span class=\"fortune-wheel__text-medium\">Неделя тренировок<\/span><br> <span class=\"fortune-wheel__text-big\">бесплатно<\/span><br> <span>пробуйте без ограничений<\/span><br> <span>весь наш зал<\/span><br> <span>в течение 7 дней<\/span>','color':'hsl(0 0% 22%)','textColor':'#FFFFFF','width':'260px'},{'text':'Приведи друга — тренировка для него бесплатно — делитесь спортом вместе!','htmlStr':'<span class=\"fortune-wheel__text-medium\">Приведи друга <br>— тренировка для него<\/span><br><span class=\"fortune-wheel__text-big\">бесплатно<\/span><br>делитесь спортом вместе!','color':'hsl(40 93% 79%)','textColor':'#000000','width':'260px'},{'text':'3 бесплатные групповые тренировки — начните заниматься уже сегодня!','htmlStr':'<span class=\"fortune-wheel__text-medium\">3 бесплатные групповые<br>тренировки начните <br>заниматься<br>уже сегодня!<\/span>','color':'hsl(0 0% 22%)','textColor':'#FFFFFF','width':'260px'},{'text':'Персональная тренировка бесплатно — попробуйте индивидуальный подход с нашим тренером.','htmlStr':'<span class=\"fortune-wheel__text-medium\">Персональная тренировка<\/span><br><span class=\"fortune-wheel__text-big\">бесплатно<\/span><br>попробуйте индивидуальный<br> подход<br> с нашим тренером.','color':'hsl(40 93% 79%)','textColor':'#000000','width':'260px'},{'text':'Подарок при первой покупке абонемента — спортивный аксессуар или приятный бонус','htmlStr':'<span class=\"fortune-wheel__text-medium\">Подарок при первой покупке<br> абонемента<\/span><br><span class=\"fortune-wheel__text-big\">подарок<\/span><br> спортивный аксессуар <br>или приятный бонус','color':'hsl(0 0% 22%)','textColor':'#FFFFFF','width':'260px'}];
+
+		const wheel = document.querySelector(".deal-wheel");
+		const spinner = wheel.querySelector(".spinner");
+		const trigger = document.querySelector(".js-fortune-wheel-action-item-run-btn");
+		const agreement = document.querySelector(".js-fortune-wheel-rules-input");
+		const ticker = wheel.querySelector(".ticker");
+
+		const prizeSlice = 360 / prizes.length;
+		const prizeOffset = Math.floor(180 / prizes.length);
+		const spinClass = "is-spinning";
+		const selectedClass = "selected";
+		const spinnerStyles = window.getComputedStyle(spinner);
+
+		let tickerAnim;
+		let rotation = 0;
+		let currentSlice = 0;
+		let prizeNodes;
+
+		const createPrizeNodes = () => {
+		  prizes.forEach(({ text, htmlStr, color, textColor, width, reaction }, i) => {
+			const rotation = ((prizeSlice * i) * -1) - prizeOffset;
+			spinner.insertAdjacentHTML(
+			  "beforeend",
+			  `<li class="prize" data-reaction=${reaction} style="--rotate: ${rotation}deg" data-id="${i}"><p class="text" style="color: ${textColor};">${htmlStr}</p></li>`
+			);
+		  });
+		};
+
+		const createConicGradient = () => {
+		  spinner.setAttribute(
+			"style",
+			`background: conic-gradient(
+			  from -90deg,
+			  ${prizes
+				.map(({ color }, i) => `${color} 0 ${(100 / prizes.length) * (prizes.length - i)}%`)
+				.reverse()
+			  }
+			);`
+		  );
+		};
+		const setupWheel = () => {
+		  createConicGradient();
+		  createPrizeNodes();
+		  prizeNodes = wheel.querySelectorAll(".prize");
+		};
+
+		const spinertia = (min, max) => {
+		  min = Math.ceil(min);
+		  max = Math.floor(max);
+		  return Math.floor(Math.random() * (max - min + 1)) + min;
+		};
+
+		const runTickerAnimation = () => {
+		  const values = spinnerStyles.transform.split("(")[1].split(")")[0].split(",");
+		  const a = values[0];
+		  const b = values[1];  
+		  let rad = Math.atan2(b, a);
+		  
+		  if (rad < 0) rad += (2 * Math.PI);
+		  
+		  const angle = Math.round(rad * (180 / Math.PI));
+		  const slice = Math.floor(angle / prizeSlice);
+
+		  if (currentSlice !== slice) {
+			ticker.style.animation = "none";
+			setTimeout(() => ticker.style.animation = null, 10);
+			currentSlice = slice;
+		  }
+		  tickerAnim = requestAnimationFrame(runTickerAnimation);
+		};
+
+		const selectPrize = () => {
+		  const selected = Math.floor(rotation / prizeSlice);
+		  prizeNodes[selected].classList.add(selectedClass);
+		  setCookie('prizeId', prizeNodes[selected].dataset.id, {secure: true, 'max-age': 5});
+		};
+
+		trigger.addEventListener("click", () => {
+		  trigger.disabled = true;
+		  agreement.disabled = true;
+		  rotation = Math.floor(Math.random() * 360 + spinertia(2000, 5000));
+		  prizeNodes.forEach((prize) => prize.classList.remove(selectedClass));
+		  wheel.classList.add(spinClass);
+		  spinner.style.setProperty("--rotate", rotation);
+		  ticker.style.animation = "none";
+		  runTickerAnimation();
+		});
+
+		spinner.addEventListener("transitionend", () => {
+		  cancelAnimationFrame(tickerAnim);
+		  rotation %= 360;
+		  selectPrize();
+		  wheel.classList.remove(spinClass);
+		  spinner.style.setProperty("--rotate", rotation);
+		  setTimeout(() => {
+				$('.js-wheel-form-btn').trigger('click');
+		  }, 1000);
+		});
+
+		setupWheel();
+	}
+</script>
+<script src="/local/templates/main/plugins/Inputmask-5.x/dist/jquery.inputmask.js"></script>		    </body>
+</html>

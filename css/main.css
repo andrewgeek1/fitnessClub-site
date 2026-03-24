@@ -10,6 +10,7 @@
     --bg-soft: #e9edf6;
     --bg-hero: #475780;
     --bg-dark: #2f3d63;
+    --hero-overlap: clamp(72px, 8vw, 128px);
 
     --text-main: #24314f;
     --text-muted: #5f6985;
@@ -26,7 +27,7 @@ body {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    font-family: 'Manrope', 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-family: 'Golos Text', 'Segoe UI', Tahoma, Arial, sans-serif;
     background: var(--bg-page);
     color: var(--text-main);
     line-height: 1.5;
@@ -66,7 +67,7 @@ h3 {
 h1,
 h2,
 .section-title {
-    font-family: 'Oswald', 'Manrope', sans-serif;
+    font-family: 'Oswald', 'Golos Text', sans-serif;
     letter-spacing: 0.02em;
 }
 
@@ -339,6 +340,7 @@ main {
 .home-block--hero {
     background: var(--bg-hero);
     color: var(--text-on-dark);
+    padding-bottom: calc(clamp(56px, 6vw, 96px) + var(--hero-overlap));
 }
 
 .home-block--light {
@@ -381,10 +383,17 @@ main {
 }
 
 .hero-slider {
+    position: relative;
+    z-index: 5;
     width: 100%;
     border-radius: 28px;
     overflow: hidden;
     box-shadow: 0 24px 50px rgba(0, 0, 0, 0.3);
+    margin-bottom: calc(-1 * var(--hero-overlap));
+}
+
+#home-about.home-block--light {
+    padding-top: calc(clamp(56px, 6vw, 96px) + var(--hero-overlap));
 }
 
 .slide-card {
@@ -689,7 +698,6 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(2px);
     transform: translate(-50%, -50%);
     pointer-events: none;
     opacity: 0;
@@ -734,103 +742,167 @@ main {
 }
 
 .cards-nav button {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
-    border: 1px solid var(--border-light);
-    background: #ffffff;
-    color: var(--text-main);
-    font-size: 30px;
+    border: 1px solid #cdd5e8;
+    background: transparent;
+    color: #96a1bf;
+    font-size: 38px;
     line-height: 1;
     cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.cards-nav button:hover {
+    background: #ffffff;
+    color: var(--text-main);
+    border-color: #b8c3df;
 }
 
 .club-cards-track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(260px, 1fr);
-    gap: 16px;
-    overflow: auto;
-    padding-bottom: 4px;
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    overflow-y: visible;
+    padding: 4px 2px 16px;
     scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
 }
 
 .club-cards-track::-webkit-scrollbar {
-    height: 8px;
+    height: 7px;
 }
 
 .club-cards-track::-webkit-scrollbar-thumb {
-    background: #c8d0e5;
+    background: #c2cbe3;
     border-radius: 10px;
 }
 
 .plan-card {
+    flex: 0 0 min(360px, calc(100vw - 52px));
     background: #ffffff;
     border: 1px solid var(--border-light);
-    border-radius: 18px;
-    padding: 16px;
+    border-radius: 24px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0;
     box-shadow: var(--shadow-card);
     scroll-snap-align: start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 22px 42px rgba(33, 50, 90, 0.16);
 }
 
 .plan-cover {
-    min-height: 120px;
-    border-radius: 14px;
+    min-height: 174px;
+    border-radius: 0;
     font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
+    font-size: clamp(2rem, 2.7vw, 2.45rem);
     text-transform: uppercase;
     display: flex;
     align-items: flex-end;
-    padding: 14px;
+    padding: 26px 24px 18px;
     color: #ffffff;
+    letter-spacing: 0.02em;
+    position: relative;
+    isolation: isolate;
+}
+
+.plan-cover::before {
+    content: "OCEANIS FITNESS";
+    position: absolute;
+    top: 16px;
+    left: 24px;
+    font-family: 'Golos Text', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    opacity: 0.9;
+}
+
+.plan-cover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 76% 18%, rgba(255, 255, 255, 0.22), transparent 52%);
+    z-index: -1;
 }
 
 .plan-card--light .plan-cover {
-    background: linear-gradient(135deg, #f2f5fd, #d9dfef);
-    color: #3f4c76;
+    background: linear-gradient(140deg, #f2f4fa 0%, #dee2ee 100%);
+    color: #4a5477;
 }
 
 .plan-card--pink .plan-cover {
-    background: linear-gradient(135deg, #f8b2cb, #ef83b0);
+    background: linear-gradient(140deg, #f8b2cc 0%, #eb80ad 100%);
 }
 
 .plan-card--dark .plan-cover {
-    background: linear-gradient(135deg, #3f4c76, #2a3150);
+    background: linear-gradient(140deg, #6d6d73 0%, #35353b 100%);
 }
 
 .plan-card--black .plan-cover {
-    background: linear-gradient(135deg, #313131, #0f0f12);
+    background: linear-gradient(140deg, #30343a 0%, #05070d 100%);
 }
 
 .plan-term {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 24px 0;
     text-transform: uppercase;
-    font-size: 0.76rem;
+    font-size: 0.82rem;
     letter-spacing: 0.08em;
-    color: #7f8aac;
+    color: #6f7a9a;
     font-weight: 700;
 }
 
+.plan-term::before {
+    content: "";
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid #a3aec8;
+    box-shadow: inset 0 4px 0 #a3aec8;
+    flex-shrink: 0;
+}
+
 .plan-card h3 {
-    font-size: 2rem;
-    margin: 0;
+    font-size: clamp(2rem, 2.8vw, 2.85rem);
+    line-height: 1.05;
+    margin: 10px 0 0;
+    padding: 0 24px;
+    color: #3a4770;
+    text-transform: uppercase;
 }
 
 .plan-card p {
+    padding: 0 24px;
     color: var(--text-muted);
     margin: 0;
 }
 
+.plan-card p:last-of-type {
+    margin-top: 12px;
+    min-height: 88px;
+}
+
 .plan-btn {
-    margin-top: auto;
+    margin: auto 24px 24px;
+    width: calc(100% - 48px);
     border: 2px solid #f38ab3;
     border-radius: 999px;
     background: #ffffff;
     color: #de5b95;
     font-weight: 800;
-    padding: 12px 18px;
+    text-transform: lowercase;
+    letter-spacing: 0.08em;
+    padding: 12px 20px;
     cursor: pointer;
 }
 
@@ -1529,6 +1601,26 @@ footer {
 }
 
 @media (max-width: 1024px) {
+    .home-block--hero {
+        padding-bottom: calc(clamp(56px, 6vw, 96px) + 86px);
+    }
+
+    .hero-slider {
+        margin-bottom: -86px;
+    }
+
+    #home-about.home-block--light {
+        padding-top: calc(clamp(56px, 6vw, 96px) + 86px);
+    }
+
+    .club-cards-track {
+        gap: 16px;
+    }
+
+    .plan-card {
+        flex-basis: min(330px, calc(100vw - 56px));
+    }
+
     .about-grid {
         grid-template-columns: 1fr;
     }
@@ -1600,6 +1692,18 @@ footer {
 }
 
 @media (max-width: 768px) {
+    .home-block--hero {
+        padding-bottom: clamp(56px, 6vw, 96px);
+    }
+
+    .hero-slider {
+        margin-bottom: 0;
+    }
+
+    #home-about.home-block--light {
+        padding-top: clamp(56px, 6vw, 96px);
+    }
+
     header nav ul {
         gap: 12px;
         flex-wrap: wrap;
@@ -1635,6 +1739,19 @@ footer {
     .section-head {
         flex-direction: column;
         align-items: flex-start;
+    }
+
+    .cards-nav {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .plan-card {
+        flex-basis: calc(100vw - 36px);
+    }
+
+    .plan-card p:last-of-type {
+        min-height: 0;
     }
 
     .map-container {
