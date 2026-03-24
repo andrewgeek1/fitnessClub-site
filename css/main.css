@@ -1117,6 +1117,140 @@ main {
     font-weight: 700;
 }
 
+.contacts-page {
+    width: 100%;
+}
+
+.contacts-breadcrumb {
+    text-transform: uppercase;
+    font-size: 0.76rem;
+    letter-spacing: 0.07em;
+    color: #9ba6c4;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.contacts-title {
+    font-size: clamp(2.4rem, 4vw, 4rem);
+    line-height: 1;
+    margin-bottom: 24px;
+}
+
+.contact-layout--reference {
+    align-items: flex-start;
+    flex-wrap: nowrap;
+}
+
+.map-container--reference {
+    position: relative;
+    border-radius: 20px;
+    background: #ebeff8;
+    min-height: 560px;
+}
+
+.map-container--reference iframe {
+    filter: grayscale(1) contrast(1.04) brightness(1.04);
+}
+
+.map-controls {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    display: grid;
+    gap: 8px;
+}
+
+.map-controls button {
+    width: 34px;
+    height: 34px;
+    border: 1px solid #c7d0e6;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #56607f;
+    font-size: 22px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.map-pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44px;
+    height: 44px;
+    transform: translate(-50%, -50%);
+    border-radius: 50% 50% 50% 0;
+    background: #3d4a75;
+    rotate: -45deg;
+    z-index: 2;
+    box-shadow: 0 8px 20px rgba(37, 52, 90, 0.35);
+    pointer-events: none;
+}
+
+.map-pin::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+}
+
+.right-column--reference {
+    gap: 34px;
+    width: min(360px, 100%);
+    padding-top: 8px;
+}
+
+.right-column--reference .club-info,
+.right-column--reference .sales-info {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+}
+
+.right-column--reference .club-info h2,
+.right-column--reference .sales-info h2 {
+    text-transform: uppercase;
+    color: #aab3c8;
+    font-size: clamp(1.8rem, 2.2vw, 2.8rem);
+    margin-bottom: 14px;
+}
+
+.right-column--reference .club-info p,
+.right-column--reference .sales-info p {
+    color: #2d395f;
+    margin-bottom: 10px;
+    font-size: 1.05rem;
+}
+
+.sales-mail {
+    color: #e15d96;
+    font-weight: 700;
+}
+
+.social-links--large {
+    margin-top: 22px;
+    gap: 28px;
+}
+
+.social-links--large a {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-size: 1.85rem;
+    font-family: 'Oswald', sans-serif;
+    color: #344170;
+}
+
+.contact-form--compact {
+    margin-top: 28px;
+    max-width: 640px;
+}
+
 .contact-form {
     max-width: 430px;
     margin-top: 30px;
@@ -1446,6 +1580,23 @@ footer {
     .events-grid {
         grid-template-columns: 1fr;
     }
+
+    .contact-layout--reference {
+        flex-wrap: wrap;
+    }
+
+    .map-container--reference {
+        min-height: 460px;
+    }
+
+    .right-column--reference {
+        width: 100%;
+        max-width: none;
+    }
+
+    .social-links--large a {
+        font-size: 1.6rem;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1488,6 +1639,26 @@ footer {
 
     .map-container {
         height: 400px;
+    }
+
+    .map-container--reference {
+        min-height: 360px;
+    }
+
+    .contacts-title {
+        margin-bottom: 18px;
+    }
+
+    .map-controls {
+        left: 10px;
+    }
+
+    .social-links--large {
+        gap: 16px;
+    }
+
+    .social-links--large a {
+        font-size: 1.3rem;
     }
 
     .footer-inner {

@@ -369,63 +369,70 @@ function renderContacts() {
     wrapper.className = 'contacts-wrapper';
 
     wrapper.innerHTML = `
-        <h1>Контакты</h1>
+        <div class="contacts-page">
+            <p class="contacts-breadcrumb">Главная — Контакты</p>
+            <h1 class="contacts-title">Контакты</h1>
 
-        <div class="contact-layout">
-
-            <!-- КАРТА -->
-            <div class="map-container">
-                <iframe
-                    src="https://yandex.ru/map-widget/v1/?ll=44.0075%2C56.2965&z=12"
-                    width="100%"
-                    height="100%"
-                    frameborder="0">
-                </iframe>
-            </div>
-
-            <!-- ПРАВАЯ КОЛОНКА -->
-            <div class="right-column">
-
-                <!-- Блок Клуб -->
-                <div class="club-info">
-                    <h2>Клуб</h2>
-                    <p>Нижний Новгород, пр. Гагарина, 35, корп.3, 3 этаж</p>
-                    <p>Пн - Пт | 6:30 - 23:00</p>
-                    <p>Сб - Вс | 8:00 - 22:00</p>
-                    <button class="feedback-btn">Обратная связь</button>
+            <div class="contact-layout contact-layout--reference">
+                <div class="map-container map-container--reference">
+                    <div class="map-controls" aria-hidden="true">
+                        <button type="button">+</button>
+                        <button type="button">−</button>
+                    </div>
+                    <div class="map-pin" aria-hidden="true"></div>
+                    <iframe
+                        src="https://yandex.ru/map-widget/v1/?ll=44.0075%2C56.2965&z=13&pt=44.0075,56.2965,pm2blm"
+                        width="100%"
+                        height="100%"
+                        frameborder="0"
+                        title="Карта фитнес-клуба">
+                    </iframe>
                 </div>
 
-                <!-- Блок Отдел продаж -->
-                <div class="sales-info">
-                    <h2>Отдел продаж</h2>
-                    <p>8 (831) 2-172-172</p>
-                    <p>Ежедневно | 10:00 - 21:00</p>
-                    <p>sale@oceanis-fitness.ru</p>
-                    <div class="social-links">
-                        <a href="#">Vkontakte</a>
-                        <a href="#">Telegram</a>
+                <div class="right-column right-column--reference">
+                    <div class="club-info">
+                        <h2>Клуб</h2>
+                        <p>Нижний Новгород, пр. Гагарина, 35, корп.3, 3 этаж</p>
+                        <p>Пн - Пт | 6:30 - 23:00, Сб - Вс | 8:00 - 22:00</p>
+                        <button class="feedback-btn line-btn" data-open-guest-modal="true">обратная связь</button>
+                    </div>
+
+                    <div class="sales-info">
+                        <h2>Отдел продаж</h2>
+                        <p>8 (831) 2-172-172</p>
+                        <p>Ежедневно | 10:00 - 21:00</p>
+                        <p><a class="sales-mail" href="mailto:sale@oceanis-fitness.ru">sale@oceanis-fitness.ru</a></p>
+                        <div class="social-links social-links--large">
+                            <a href="#" aria-label="Vkontakte">Vkontakte</a>
+                            <a href="#" aria-label="Telegram">Telegram</a>
+                        </div>
                     </div>
                 </div>
-
             </div>
+
+            <form class="contact-form contact-form--compact" novalidate>
+                <h2>Записаться на тренировку</h2>
+
+                <input type="text" name="name" placeholder="Ваше имя">
+                <small class="error"></small>
+
+                <input type="tel" name="phone" placeholder="+7 (___) ___-__-__">
+                <small class="error"></small>
+
+                <button type="submit">Отправить заявку</button>
+                <div class="form-message"></div>
+            </form>
         </div>
-
-        <!-- Форма записи -->
-        <form class="contact-form" novalidate>
-            <h2>Записаться на тренировку</h2>
-
-            <input type="text" name="name" placeholder="Ваше имя">
-            <small class="error"></small>
-
-            <input type="tel" name="phone" placeholder="+7 (___) ___-__-__">
-            <small class="error"></small>
-
-            <button type="submit">Отправить заявку</button>
-            <div class="form-message"></div>
-        </form>
     `;
 
     contactsPage.appendChild(wrapper);
+
+    const guestButton = document.querySelector('#guest-btn');
+    wrapper.querySelectorAll('[data-open-guest-modal="true"]').forEach(button => {
+        button.addEventListener('click', () => {
+            if (guestButton) guestButton.click();
+        });
+    });
 
     // ====== ВОССТАНОВЛЕНИЕ ДАННЫХ ФОРМЫ ======
     const form = wrapper.querySelector('form');
