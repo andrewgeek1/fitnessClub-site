@@ -74,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initZoneGallery();
     initClubCardsNavigation();
     initEventFilters();
+    initCallWidget();
 });
 
 
@@ -865,6 +866,51 @@ function initEventFilters() {
                 card.classList.toggle('is-hidden', !shouldShow);
             });
         });
+    });
+}
+
+function initCallWidget() {
+    const widget = document.getElementById('call-widget');
+    const closeButton = document.getElementById('call-widget-close');
+    if (!widget || !closeButton) return;
+
+    const FIRST_DELAY_MS = 30000;
+    const REPEAT_DELAY_MS = 90000;
+    const STORAGE_KEY = 'callWidgetLastClosedAt';
+
+    let timerId = null;
+
+    const show = () => {
+        widget.classList.add('is-visible');
+        widget.setAttribute('aria-hidden', 'false');
+    };
+
+    const hide = () => {
+        widget.classList.remove('is-visible');
+        widget.setAttribute('aria-hidden', 'true');
+    };
+
+    const scheduleShow = (delay) => {
+        clearTimeout(timerId);
+        timerId = setTimeout(show, delay);
+    };
+
+    const lastClosedAt = Number(localStorage.getItem(STORAGE_KEY) || 0);
+    if (!lastClosedAt) {
+        scheduleShow(FIRST_DELAY_MS);
+    } else {
+        const elapsed = Date.now() - lastClosedAt;
+        if (elapsed >= REPEAT_DELAY_MS) {
+            scheduleShow(FIRST_DELAY_MS);
+        } else {
+            scheduleShow(REPEAT_DELAY_MS - elapsed);
+        }
+    }
+
+    closeButton.addEventListener('click', () => {
+        hide();
+        localStorage.setItem(STORAGE_KEY, String(Date.now()));
+        scheduleShow(REPEAT_DELAY_MS);
     });
 }
 
