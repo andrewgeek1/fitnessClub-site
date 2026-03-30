@@ -753,33 +753,22 @@ function initZoneGallery() {
 
     const stage = root.querySelector('.zone-stage');
     const slides = Array.from(root.querySelectorAll('.zone-slide'));
-    const tabs = Array.from(root.querySelectorAll('.zone-tab'));
     const cursor = root.querySelector('.zone-cursor');
-    const leftPreview = root.querySelector('.zone-preview--left img');
-    const rightPreview = root.querySelector('.zone-preview--right img');
-    const navButtons = Array.from(root.querySelectorAll('[data-zone-direction]'));
-
-    if (!stage || !slides.length || !leftPreview || !rightPreview) return;
+    if (!stage || !slides.length) return;
 
     let index = 0;
 
     const normalize = (value) => (value + slides.length) % slides.length;
 
     const render = () => {
-        slides.forEach((slide, i) => {
-            slide.classList.toggle('is-active', i === index);
-        });
-        tabs.forEach((tab, i) => {
-            tab.classList.toggle('is-active', i === index);
-        });
-
         const prevIndex = normalize(index - 1);
         const nextIndex = normalize(index + 1);
-        const prevImage = slides[prevIndex].querySelector('img');
-        const nextImage = slides[nextIndex].querySelector('img');
 
-        if (prevImage) leftPreview.src = prevImage.src;
-        if (nextImage) rightPreview.src = nextImage.src;
+        slides.forEach((slide, i) => {
+            slide.classList.toggle('is-active', i === index);
+            slide.classList.toggle('is-prev', i === prevIndex);
+            slide.classList.toggle('is-next', i === nextIndex);
+        });
     };
 
     const go = (direction) => {
@@ -787,50 +776,57 @@ function initZoneGallery() {
         render();
     };
 
-    navButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const direction = button.dataset.zoneDirection === 'prev' ? -1 : 1;
-            go(direction);
-        });
-    });
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const next = Number(tab.dataset.zoneIndex);
-            if (Number.isNaN(next)) return;
-            index = normalize(next);
-            render();
-        });
-    });
-
-    stage.addEventListener('mouseenter', () => {
-        stage.classList.add('is-hover');
-    });
-
-    stage.addEventListener('mouseleave', () => {
-        stage.classList.remove('is-hover');
-        root.removeAttribute('data-side');
-    });
-
-    stage.addEventListener('mousemove', (e) => {
+    const getPointerData = (event) => {
         const rect = stage.getBoundingClientRect();
-        const localX = e.clientX - rect.left;
-        const localY = e.clientY - rect.top;
+        const localX = Math.min(Math.max(event.clientX - rect.left, 0), rect.width);
+        const localY = Math.min(Math.max(event.clientY - rect.top, 0), rect.height);
         const side = localX < rect.width / 2 ? 'left' : 'right';
 
-        root.dataset.side = side;
-        if (cursor) {
-            cursor.textContent = side === 'left' ? '←' : '→';
-            cursor.style.left = `${localX}px`;
-            cursor.style.top = `${localY}px`;
-        }
+        return { localX, localY, side };
+    };
+
+    const updateCursor = (event) => {
+        if (!cursor) return;
+
+        const { localX, localY, side } = getPointerData(event);
+        stage.dataset.side = side;
+        cursor.textContent = side === 'left' ? '←' : '→';
+        cursor.style.left = `${localX}px`;
+        cursor.style.top = `${localY}px`;
+    };
+
+    stage.addEventListener('pointerenter', (event) => {
+        if (event.pointerType === 'touch') return;
+        stage.classList.add('is-hover');
+        updateCursor(event);
     });
 
-    stage.addEventListener('click', () => {
-        const side = root.dataset.side === 'left' ? -1 : 1;
-        go(side);
+    stage.addEventListener('pointerleave', () => {
+        stage.classList.remove('is-hover');
+        delete stage.dataset.side;
+    });
+
+    stage.addEventListener('pointermove', (event) => {
+        if (event.pointerType === 'touch') return;
+        if (!stage.classList.contains('is-hover')) stage.classList.add('is-hover');
+        updateCursor(event);
+    });
+
+    stage.addEventListener('click', (event) => {
+        const { side } = getPointerData(event);
+        go(side === 'left' ? -1 : 1);
+    });
+
+    stage.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            go(-1);
+        }
+
+        if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            go(1);
+        }
     });
 
     render();

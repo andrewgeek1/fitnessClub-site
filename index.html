@@ -150,37 +150,19 @@
             <div class="container">
                 <h2 class="section-title">Фото зала</h2>
                 <article class="zone-gallery" data-zone-gallery>
-                    <div class="zone-preview zone-preview--left">
-                        <img src="assets/images/main term.jpg" alt="" draggable="false">
-                    </div>
-
-                    <div class="zone-core">
-                        <div class="zone-tabs">
-                            <button class="zone-tab is-active" type="button" data-zone-index="0">Зал</button>
-                            <button class="zone-tab" type="button" data-zone-index="1">Бассейн</button>
-                            <button class="zone-tab" type="button" data-zone-index="2">Тренировки</button>
+                    <div class="zone-stage" tabindex="0" aria-label="Галерея клуба. Нажмите слева для предыдущего фото, справа для следующего.">
+                        <div class="zone-slides">
+                            <figure class="zone-slide is-active">
+                                <img src="assets/images/photo-line1.jpg" alt="Тренажерный зал" draggable="false">
+                            </figure>
+                            <figure class="zone-slide">
+                                <img src="assets/images/photo-line2.jpg" alt="Функциональная зона" draggable="false">
+                            </figure>
+                            <figure class="zone-slide">
+                                <img src="assets/images/photo-line3.jpg" alt="Тренировка с тренером" draggable="false">
+                            </figure>
                         </div>
-                        <div class="zone-stage">
-                            <div class="zone-slides">
-                                <figure class="zone-slide is-active">
-                                    <img src="assets/images/photo-line1.jpg" alt="Тренажерный зал">
-                                </figure>
-                                <figure class="zone-slide">
-                                    <img src="assets/images/photo-line2.jpg" alt="Функциональная зона">
-                                </figure>
-                                <figure class="zone-slide">
-                                    <img src="assets/images/photo-line3.jpg" alt="Тренировка с тренером">
-                                </figure>
-                            </div>
-                            <div class="zone-divider"></div>
-                            <div class="zone-cursor" aria-hidden="true">→</div>
-                            <button class="zone-half zone-half--left" type="button" data-zone-direction="prev" aria-label="Предыдущий слайд"></button>
-                            <button class="zone-half zone-half--right" type="button" data-zone-direction="next" aria-label="Следующий слайд"></button>
-                        </div>
-                    </div>
-
-                    <div class="zone-preview zone-preview--right">
-                        <img src="assets/images/dima.jpg" alt="" draggable="false">
+                        <div class="zone-cursor" aria-hidden="true">→</div>
                     </div>
                 </article>
             </div>
