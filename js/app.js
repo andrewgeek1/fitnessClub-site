@@ -50,7 +50,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (document.querySelector('.hero-slider')) {
-        new Swiper('.hero-slider', {
+        const heroKicker = document.querySelector('[data-hero-kicker]');
+        const heroTitle = document.querySelector('[data-hero-title]');
+        const heroLead = document.querySelector('[data-hero-lead]');
+
+        const updateHeroCopy = (swiper) => {
+            const activeSlide = swiper.slides[swiper.activeIndex];
+            if (!activeSlide) return;
+
+            if (heroKicker) heroKicker.textContent = activeSlide.dataset.heroKicker || '';
+            if (heroTitle) heroTitle.innerHTML = activeSlide.dataset.heroTitle || '';
+            if (heroLead) heroLead.textContent = activeSlide.dataset.heroLead || '';
+        };
+
+        const heroSwiper = new Swiper('.hero-slider', {
             loop: true,
             speed: 1200,
             autoplay: {
@@ -58,14 +71,24 @@ document.addEventListener('DOMContentLoaded', function () {
                 disableOnInteraction: false
             },
             pagination: {
-                el: '.swiper-pagination',
+                el: '.hero-pagination',
                 clickable: true
             },
             effect: 'fade',
             fadeEffect: {
                 crossFade: true
+            },
+            on: {
+                init(swiper) {
+                    updateHeroCopy(swiper);
+                },
+                slideChangeTransitionStart(swiper) {
+                    updateHeroCopy(swiper);
+                }
             }
         });
+
+        updateHeroCopy(heroSwiper);
     }
 
     initMoreMenu();

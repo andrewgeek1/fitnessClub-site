@@ -55,26 +55,34 @@
     <section id="home" class="page active home-page">
         <section class="home-block home-block--hero">
             <div class="container">
-                <div class="hero-content">
-                    <p class="hero-kicker">Премиальный клуб</p>
-                    <h1>ФИТНЕС-КЛУБ<br>ПРЕМИУМ КЛАССА</h1>
-                    <p class="hero-lead">Пространство с современными тренажерами, персональными программами и тренерами.</p>
+                <div class="hero-head">
+                    <div class="hero-content">
+                        <p class="hero-kicker" data-hero-kicker>Премиальный клуб</p>
+                        <h1 data-hero-title>ФИТНЕС-КЛУБ<br>ПРЕМИУМ КЛАССА</h1>
+                        <p class="hero-lead" data-hero-lead>Пространство с современными тренажерами, персональными программами и тренерами.</p>
+                    </div>
+                    <div class="hero-pagination swiper-pagination"></div>
                 </div>
 
                 <div class="hero-slider swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
+                        <div class="swiper-slide"
+                             data-hero-kicker="Премиальный клуб"
+                             data-hero-title="ФИТНЕС-КЛУБ&lt;br&gt;ПРЕМИУМ КЛАССА"
+                             data-hero-lead="Пространство с современными тренажерами, персональными программами и тренерами.">
                             <div class="slide-card">
                                 <img src="assets/images/main.jpg" alt="Зал фитнес-клуба">
                             </div>
                         </div>
-                        <div class="swiper-slide">
+                        <div class="swiper-slide"
+                             data-hero-kicker="Премиальный клуб"
+                             data-hero-title="СОДОСТУП В&lt;br&gt;ТЕРМАЛЬНЫЙ КОМПЛЕКС"
+                             data-hero-lead="Комбинируйте тренировки с отдыхом в термальном комплексе по вашей клубной карте.">
                             <div class="slide-card">
-                                <img src="assets/images/main term.jpg" alt="Тренажерный зал">
+                                <img src="assets/images/main term.jpg" alt="Термальный комплекс">
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </section>
