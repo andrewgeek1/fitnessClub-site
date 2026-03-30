@@ -930,6 +930,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const nameInput = form.querySelector('input[type="text"]');
     const phoneInput = form.querySelector('input[type="tel"]');
+    const consentInput = form.querySelector('input[type="checkbox"]');
 
     let message = document.createElement("div");
     message.className = "form-message";
@@ -964,12 +965,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     closeBtn.addEventListener("click", closeModal);
-
-    modal.addEventListener("click",(e)=>{
-        if(e.target === modal){
-            closeModal();
-        }
-    });
 
     document.addEventListener("keydown", (e)=>{
         if(e.key === "Escape" && modal.classList.contains("active")){
@@ -1033,6 +1028,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+        if (consentInput && !consentInput.checked) {
+
+            message.textContent = "Подтвердите согласие на обработку данных";
+            message.classList.add("error");
+            return;
+
+        }
+
         const button = form.querySelector("button");
 
         button.disabled = true;
@@ -1049,7 +1052,7 @@ document.addEventListener("DOMContentLoaded", () => {
             message.className = "form-message success";
 
             button.disabled = false;
-            button.textContent = "Записаться";
+            button.textContent = "Отправить";
 
             setTimeout(closeModal,1000);
 
