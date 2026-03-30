@@ -681,28 +681,40 @@ function initLogout() {
 function initMoreMenu() {
     const moreContainer = document.getElementById('nav-more');
     const toggle = document.getElementById('more-toggle');
-    const menu = document.getElementById('more-menu');
+    const overlay = document.getElementById('menu-overlay');
 
-    if (!moreContainer || !toggle || !menu) return;
+    if (!moreContainer || !toggle || !overlay) return;
 
     const closeMenu = () => {
         moreContainer.classList.remove('open');
+        document.body.classList.remove('menu-open');
         toggle.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+    };
+
+    const openMenu = () => {
+        moreContainer.classList.add('open');
+        document.body.classList.add('menu-open');
+        toggle.setAttribute('aria-expanded', 'true');
+        overlay.setAttribute('aria-hidden', 'false');
     };
 
     toggle.addEventListener('click', (e) => {
         e.stopPropagation();
-        const isOpen = moreContainer.classList.toggle('open');
-        toggle.setAttribute('aria-expanded', String(isOpen));
+        const isOpen = moreContainer.classList.contains('open');
+
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
+        }
     });
 
-    menu.querySelectorAll('a').forEach(link => {
+    overlay.querySelectorAll('.menu-overlay__link').forEach(link => {
         link.addEventListener('click', closeMenu);
     });
 
-    document.addEventListener('click', (e) => {
-        if (!moreContainer.contains(e.target)) closeMenu();
-    });
+    window.addEventListener('hashchange', closeMenu);
 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') closeMenu();
