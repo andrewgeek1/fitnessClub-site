@@ -719,11 +719,12 @@ main {
 
 .zone-gallery {
     /* Здесь можно вручную менять геометрию слайдера */
-    --zone-height: clamp(420px, 46vw, 620px);
-    --zone-side-peek: clamp(140px, 18vw, 260px);
-    width: min(1520px, calc(100vw - 16px));
+    --zone-height: clamp(360px, 40vw, 660px);
+    --zone-side-peek: clamp(72px, 11vw, 170px);
+    width: 100vw;
     margin-left: 50%;
     transform: translateX(-50%);
+    margin-top: 24px;
 }
 
 .zone-stage {
@@ -731,6 +732,7 @@ main {
     height: var(--zone-height);
     overflow: hidden;
     cursor: none;
+    padding: 0 12px;
 }
 
 .zone-slides {
@@ -743,16 +745,15 @@ main {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: calc(100% - (var(--zone-side-peek) * 2));
-    border-radius: 32px;
+    width: calc(100% - (var(--zone-side-peek) * 2) - 24px);
+    border-radius: 28px;
     overflow: hidden;
-    background: #0f1a34;
-    box-shadow: 0 26px 70px rgba(15, 26, 52, 0.2);
+    background: #11192c;
     opacity: 0;
-    left: var(--zone-side-peek);
-    transform: scale(0.94);
+    left: calc(var(--zone-side-peek) + 12px);
+    transform: scale(0.96);
     filter: blur(0);
-    transition: left 0.55s ease, opacity 0.4s ease, transform 0.55s ease, filter 0.4s ease;
+    transition: left 0.55s ease, opacity 0.42s ease, transform 0.55s ease, filter 0.42s ease;
 }
 
 .zone-slide.is-active {
@@ -763,18 +764,18 @@ main {
 
 .zone-slide.is-prev,
 .zone-slide.is-next {
-    opacity: 1;
-    transform: scale(0.96);
-    filter: blur(5px) saturate(0.82);
+    opacity: 0.72;
+    transform: scale(0.985);
+    filter: blur(8px) saturate(0.82) brightness(0.7);
     z-index: 2;
 }
 
 .zone-slide.is-prev {
-    left: calc((var(--zone-side-peek) * 3) - 100%);
+    left: calc((var(--zone-side-peek) * 3) - 100% + 12px);
 }
 
 .zone-slide.is-next {
-    left: calc(100% - var(--zone-side-peek));
+    left: calc(100% - var(--zone-side-peek) - 12px);
 }
 
 .zone-slide img {
@@ -790,8 +791,8 @@ main {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(180deg, rgba(9, 16, 34, 0.05) 0%, rgba(9, 16, 34, 0.2) 100%),
-        linear-gradient(90deg, rgba(9, 16, 34, 0.18) 0%, rgba(9, 16, 34, 0) 16%, rgba(9, 16, 34, 0) 84%, rgba(9, 16, 34, 0.18) 100%);
+        linear-gradient(180deg, rgba(9, 16, 34, 0.04) 0%, rgba(9, 16, 34, 0.18) 100%),
+        linear-gradient(90deg, rgba(9, 16, 34, 0.22) 0%, rgba(9, 16, 34, 0) 14%, rgba(9, 16, 34, 0) 86%, rgba(9, 16, 34, 0.22) 100%);
     pointer-events: none;
 }
 
@@ -799,8 +800,8 @@ main {
     position: absolute;
     top: 0;
     left: 0;
-    width: 92px;
-    height: 92px;
+    width: 76px;
+    height: 76px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.82);
     background: rgba(8, 17, 37, 0.18);
@@ -808,7 +809,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 1;
     box-shadow: 0 18px 36px rgba(3, 8, 19, 0.22);
     transform: translate(-50%, -50%) scale(0.88);
@@ -1892,7 +1893,7 @@ footer {
     }
 
     .zone-stage {
-        height: clamp(360px, 42vw, 500px);
+        height: clamp(320px, 38vw, 460px);
     }
 
     .mosaic-grid,
@@ -2000,15 +2001,16 @@ footer {
     }
 
     .zone-gallery {
-        width: 100%;
-        margin-left: 0;
-        transform: none;
-        --zone-height: clamp(320px, 72vw, 460px);
-        --zone-side-peek: clamp(56px, 12vw, 100px);
+        width: 100vw;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        --zone-height: clamp(280px, 68vw, 420px);
+        --zone-side-peek: clamp(26px, 8vw, 64px);
     }
 
     .zone-stage {
         height: var(--zone-height);
+        padding: 0 8px;
     }
 
     .guest-modal-layout {
