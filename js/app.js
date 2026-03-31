@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     storage.setRequests(state.requests);
 
+    initRevealMotion();
     initRouter();
     controllers.menu.update();
     controllers.auth.initLogout();
@@ -48,48 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
         controllers.menu.update();
         location.hash = '#home';
     });
-
-    if (document.querySelector('.hero-slider')) {
-        const heroKicker = document.querySelector('[data-hero-kicker]');
-        const heroTitle = document.querySelector('[data-hero-title]');
-        const heroLead = document.querySelector('[data-hero-lead]');
-
-        const updateHeroCopy = (swiper) => {
-            const activeSlide = swiper.slides[swiper.activeIndex];
-            if (!activeSlide) return;
-
-            if (heroKicker) heroKicker.textContent = activeSlide.dataset.heroKicker || '';
-            if (heroTitle) heroTitle.innerHTML = activeSlide.dataset.heroTitle || '';
-            if (heroLead) heroLead.textContent = activeSlide.dataset.heroLead || '';
-        };
-
-        const heroSwiper = new Swiper('.hero-slider', {
-            loop: true,
-            speed: 1200,
-            autoplay: {
-                delay: 10000,
-                disableOnInteraction: false
-            },
-            pagination: {
-                el: '.hero-pagination',
-                clickable: true
-            },
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
-            },
-            on: {
-                init(swiper) {
-                    updateHeroCopy(swiper);
-                },
-                slideChangeTransitionStart(swiper) {
-                    updateHeroCopy(swiper);
-                }
-            }
-        });
-
-        updateHeroCopy(heroSwiper);
-    }
 
     initMoreMenu();
     initHomeScrollLinks();
@@ -318,12 +277,12 @@ function renderPageContent(page) {
         admin: renderAdmin
     };
 
-    if (state.renderedPages[page]) return;
-
-    if (pages[page]) {
+    if (!state.renderedPages[page] && pages[page]) {
         pages[page]();
         state.renderedPages[page] = true;
     }
+
+    refreshRevealMotion();
 }
 
 /* ================= VIEWS / RENDERS (с сохранением UX) ================= */
@@ -331,54 +290,80 @@ function renderPageContent(page) {
 function renderPrices() {
     const pricesPage = document.getElementById('prices');
     if (!pricesPage) return;
-    pricesPage.innerHTML = '<h1>Цены</h1>';
+    const modes = [
+        { label: 'Start', title: 'Старт ритма', lead: 'Вход в систему без перегруза', price: 'от 2 000 ₽' },
+        { label: 'Core', title: 'Сильная база', lead: 'Зал, вода, групповые форматы и регулярность', price: 'от 5 000 ₽' },
+        { label: 'Flow', title: 'Нагрузка + восстановление', lead: 'Тренировка и термальный комплекс как единый цикл', price: 'от 9 000 ₽' },
+        { label: 'Elite', title: 'Максимальный сценарий', lead: 'Персональный сервис и режим без компромиссов', price: 'по запросу' }
+    ];
 
-    data.subscriptions.forEach(sub => {
-        const card = document.createElement('div');
-        card.className = 'price-card';
-        card.innerHTML = `
-            <h3>${sub.name}</h3>
-            <p>${sub.duration}</p>
-            <p>${sub.price} ₽</p>
-        `;
-        pricesPage.appendChild(card);
-    });
+    pricesPage.innerHTML = `
+        <div class="cinematic-page cinematic-page--prices" data-reveal>
+            <p class="page-kicker">Режимы жизни</p>
+            <h1>Цена — это не цифра. Это выбранный тобой сценарий силы.</h1>
+            <p class="page-lead">Мы переупаковали карты в понятные режимы жизни: от входа в ритм до максимального премиального сценария.</p>
+            <div class="price-grid">
+                ${modes.map(mode => `
+                    <article class="price-card">
+                        <span class="price-card__label">${mode.label}</span>
+                        <h3>${mode.title}</h3>
+                        <p>${mode.lead}</p>
+                        <strong>${mode.price}</strong>
+                        <button class="outline-btn line-btn" type="button" data-open-modal="guest">Выбрать режим</button>
+                    </article>
+                `).join('')}
+            </div>
+        </div>
+    `;
 }
 
 function renderSchedule() {
     const schedulePage = document.getElementById('schedule');
     if (!schedulePage) return;
-    schedulePage.innerHTML = '<h1>Расписание</h1>';
-
-    data.schedule.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'schedule-card';
-        card.innerHTML = `
-            <h3>${item.day}</h3>
-            <p>${item.time}</p>
-            <p>${item.type}</p>
-            <p>Тренер: ${item.trainer}</p>
-        `;
-        schedulePage.appendChild(card);
-    });
+    schedulePage.innerHTML = `
+        <div class="cinematic-page" data-reveal>
+            <p class="page-kicker">Расписание</p>
+            <h1>Собери неделю, в которой тело работает в твоем темпе</h1>
+            <p class="page-lead">От силовых блоков до мягкого восстановления. Выбирай время, формат и наставника под свой ритм дня.</p>
+            <div class="schedule-grid">
+                ${data.schedule.map(item => `
+                    <article class="schedule-card">
+                        <span class="schedule-card__day">${item.day}</span>
+                        <strong>${item.time}</strong>
+                        <h3>${item.type}</h3>
+                        <p>Тренер: ${item.trainer}</p>
+                    </article>
+                `).join('')}
+            </div>
+        </div>
+    `;
 }
 
 function renderTrainers() {
-    const list = document.getElementById('trainers-list');
-    if (!list) return;
+    const trainersPage = document.getElementById('trainers');
+    if (!trainersPage) return;
 
-    list.innerHTML = '';
-
-    data.trainers.forEach(trainer => {
-        const card = document.createElement('div');
-        card.className = 'trainer-card';
-        card.innerHTML = `
-            <img src="assets/images/${trainer.photo}" alt="${trainer.name}">
-            <h3>${trainer.name}</h3>
-            <p>${trainer.specialization}</p>
-        `;
-        list.appendChild(card);
-    });
+    trainersPage.innerHTML = `
+        <div class="container">
+            <div class="cinematic-page" data-reveal>
+                <p class="page-kicker">Тренеры</p>
+                <h1>Не сотрудники. Люди, которые ведут тебя к результату.</h1>
+                <p class="page-lead">Каждый тренер в Fitness Fugi — это проводник к форме, дисциплине и новому ощущению собственного тела.</p>
+            </div>
+            <div class="trainers-grid">
+                ${data.trainers.map(trainer => `
+                    <article class="trainer-card">
+                        <img src="assets/images/${trainer.photo}" alt="${trainer.name}">
+                        <div class="trainer-card__body">
+                            <p class="trainer-card__role">${trainer.specialization}</p>
+                            <h3>${trainer.name}</h3>
+                            <p>Ведет к результату через технику, дисциплину и спокойную, уверенную работу на дистанции.</p>
+                        </div>
+                    </article>
+                `).join('')}
+            </div>
+        </div>
+    `;
 }
 
 /* ================= CONTACTS (сохранён UX: маска, debounce, draft, loader) ================= */
@@ -392,9 +377,10 @@ function renderContacts() {
     wrapper.className = 'contacts-wrapper';
 
     wrapper.innerHTML = `
-        <div class="contacts-page">
-            <p class="contacts-breadcrumb">Главная — Контакты</p>
+        <div class="contacts-page" data-reveal>
+            <p class="contacts-breadcrumb">Fitness Fugi — Контакты</p>
             <h1 class="contacts-title">Контакты</h1>
+            <p class="page-lead">Приезжай в пространство силы, где тренировка, восстановление и сервис складываются в один цельный маршрут.</p>
 
             <div class="contact-layout contact-layout--reference">
                 <div class="map-container map-container--reference">
@@ -417,7 +403,7 @@ function renderContacts() {
                         <h2>Клуб</h2>
                         <p>Нижний Новгород, пр. Гагарина, 35, корп.3, 3 этаж</p>
                         <p>Пн - Пт | 6:30 - 23:00, Сб - Вс | 8:00 - 22:00</p>
-                        <button class="feedback-btn line-btn" data-open-guest-modal="true">обратная связь</button>
+                        <button class="feedback-btn line-btn" type="button" data-open-modal="guest">обратная связь</button>
                     </div>
 
                     <div class="sales-info">
@@ -449,13 +435,6 @@ function renderContacts() {
     `;
 
     contactsPage.appendChild(wrapper);
-
-    const guestButton = document.querySelector('#guest-btn');
-    wrapper.querySelectorAll('[data-open-guest-modal="true"]').forEach(button => {
-        button.addEventListener('click', () => {
-            if (guestButton) guestButton.click();
-        });
-    });
 
     // ====== ВОССТАНОВЛЕНИЕ ДАННЫХ ФОРМЫ ======
     const form = wrapper.querySelector('form');
@@ -952,16 +931,55 @@ function initCallWidget() {
     });
 }
 
+let revealObserver = null;
+
+function initRevealMotion() {
+    if (!('IntersectionObserver' in window)) {
+        document.querySelectorAll('[data-reveal]').forEach(element => {
+            element.classList.add('is-visible');
+        });
+        return;
+    }
+
+    revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.16,
+        rootMargin: '0px 0px -8% 0px'
+    });
+
+    refreshRevealMotion();
+}
+
+function refreshRevealMotion() {
+    const elements = document.querySelectorAll('[data-reveal]:not(.is-visible)');
+    if (!elements.length) return;
+
+    if (!revealObserver) {
+        elements.forEach(element => {
+            element.classList.add('is-visible');
+        });
+        return;
+    }
+
+    elements.forEach(element => {
+        revealObserver.observe(element);
+    });
+}
+
 /* ================= GUEST VISIT MODAL ================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    const guestButtons = document.querySelectorAll('[data-open-modal="guest"]');
     const modal = document.getElementById("guest-modal");
     const closeBtn = document.getElementById("modal-close");
     const form = document.getElementById("guest-form");
 
-    if (!guestButtons.length || !modal || !form) return;
+    if (!modal || !form) return;
 
     const nameInput = form.querySelector('input[type="text"]');
     const phoneInput = form.querySelector('input[type="tel"]');
@@ -982,8 +1000,11 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => nameInput.focus(), 100);
     }
 
-    guestButtons.forEach(button => {
-        button.addEventListener("click", openModal);
+    document.addEventListener("click", (event) => {
+        const trigger = event.target.closest('[data-open-modal="guest"]');
+        if (!trigger) return;
+        event.preventDefault();
+        openModal();
     });
 
     /* ===== закрыть ===== */
