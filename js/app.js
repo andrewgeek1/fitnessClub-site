@@ -3,13 +3,19 @@ document.addEventListener('DOMContentLoaded', function () {
     // инициализация state из storage
     state.user = storage.getUser();
     state.requests = storage.getRequests();
+    state.pendingSyncRequests = storage.getPendingSyncRequests();
 
-        // миграция старых заявок (если без id)
+    // миграция старых заявок (если без id)
     state.requests = state.requests.map(r => {
         if (!r.id) {
             return { ...r, id: crypto.randomUUID() };
         }
-        return r;
+        return {
+            source: 'general',
+            trainerId: null,
+            trainerName: '',
+            ...r
+        };
     });
     storage.setRequests(state.requests);
 
@@ -115,6 +121,7 @@ const dom = {
 const state = {
     user: null,
     requests: [],
+    pendingSyncRequests: [],
     page: 'home',
 
     formDraft: {
@@ -124,6 +131,17 @@ const state = {
 
     admin: {
         filter: 'all' // all | new | done
+    },
+
+    trainerShowcase: {
+        activeTrainerId: null,
+        bioExpanded: false,
+        swiper: null
+    },
+
+    trainerBooking: {
+        activeTrainerId: null,
+        lastFocusedElement: null
     },
 
     renderedPages: {}
@@ -177,6 +195,15 @@ const storage = {
 
     setRequests(requests) {
         localStorage.setItem('requests', JSON.stringify(requests));
+    },
+
+    getPendingSyncRequests() {
+        try { return JSON.parse(localStorage.getItem('pendingSyncRequests')) || []; }
+        catch { localStorage.removeItem('pendingSyncRequests'); return []; }
+    },
+
+    setPendingSyncRequests(requests) {
+        localStorage.setItem('pendingSyncRequests', JSON.stringify(requests));
     }
 };
 
@@ -207,13 +234,33 @@ const services = {
                 id: crypto.randomUUID(),
                 name: requestObj.name,
                 phone: requestObj.phone,
+                source: requestObj.source || 'general',
+                trainerId: requestObj.trainerId || null,
+                trainerName: requestObj.trainerName || '',
                 status: 'new',
                 createdAt: new Date().toISOString()
             };
 
             state.requests.push(request);
             storage.setRequests(state.requests);
+            services.requests.stageForBackend(request);
             eventBus.emit('request:added', request);
+        },
+
+        stageForBackend(request) {
+            const stagedRequest = {
+                ...request,
+                syncStatus: 'pending',
+                stagedAt: new Date().toISOString()
+            };
+
+            state.pendingSyncRequests.push(stagedRequest);
+            storage.setPendingSyncRequests(state.pendingSyncRequests);
+
+            console.info('Pending backend sync request saved', stagedRequest);
+            window.dispatchEvent(new CustomEvent('fitness-club:request-staged', {
+                detail: stagedRequest
+            }));
         },
 
         deleteById(id) {
@@ -364,21 +411,414 @@ function renderSchedule() {
 }
 
 function renderTrainers() {
+    const trainersPage = document.getElementById('trainers');
     const list = document.getElementById('trainers-list');
-    if (!list) return;
+    if (!list || !trainersPage) return;
 
-    list.innerHTML = '';
+    const pageTitle = trainersPage.querySelector('h1');
+    if (pageTitle) pageTitle.textContent = 'КОМАНДА';
 
-    data.trainers.forEach(trainer => {
-        const card = document.createElement('div');
-        card.className = 'trainer-card';
-        card.innerHTML = `
-            <img src="assets/images/${trainer.photo}" alt="${trainer.name}">
-            <h3>${trainer.name}</h3>
-            <p>${trainer.specialization}</p>
-        `;
-        list.appendChild(card);
+    list.innerHTML = `
+        <div class="trainers-showcase__breadcrumbs">ГЛАВНАЯ <span>—</span> КОМАНДА</div>
+        <section class="trainers-showcase" data-trainers-showcase>
+            <div class="trainers-showcase__stage">
+                <div class="trainers-showcase__visuals">
+                    <button type="button" class="trainer-frame trainer-frame--ghost" data-trainer-prev-card aria-label="Предыдущий тренер"></button>
+                    <article class="trainer-frame trainer-frame--active" data-trainer-active-card></article>
+
+                    <div class="trainers-showcase__controls">
+                        <button type="button" class="trainers-showcase__arrow" data-trainers-nav="prev" aria-label="Предыдущий тренер">←</button>
+                        <button type="button" class="trainers-showcase__arrow" data-trainers-nav="next" aria-label="Следующий тренер">→</button>
+                    </div>
+                </div>
+
+                <div class="trainers-showcase__side">
+                    <div class="trainer-previews" data-trainer-previews></div>
+
+                    <div class="trainer-summary">
+                        <div class="trainer-summary__heading">
+                            <h2 class="trainer-details__last" data-trainer-last></h2>
+                            <p class="trainer-details__first" data-trainer-first></p>
+                        </div>
+
+                        <div class="trainer-details__actions">
+                            <button type="button" class="trainer-details__cta" data-trainer-book>записаться</button>
+                            <button type="button" class="trainer-details__toggle" data-trainer-about-toggle aria-expanded="false">
+                                о тренере
+                                <span aria-hidden="true">⌄</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trainer-about" data-trainer-about hidden></div>
+        </section>
+    `;
+
+    ensureTrainerBookingModal();
+    initTrainerShowcase();
+}
+
+function initTrainerShowcase() {
+    const root = document.querySelector('[data-trainers-showcase]');
+    if (!root) return;
+
+    const prevCard = root.querySelector('[data-trainer-prev-card]');
+    const activeCard = root.querySelector('[data-trainer-active-card]');
+    const previewsRoot = root.querySelector('[data-trainer-previews]');
+    const prevButton = root.querySelector('[data-trainers-nav="prev"]');
+    const nextButton = root.querySelector('[data-trainers-nav="next"]');
+    const lastNameElement = root.querySelector('[data-trainer-last]');
+    const firstNameElement = root.querySelector('[data-trainer-first]');
+    const aboutButton = root.querySelector('[data-trainer-about-toggle]');
+    const bookButton = root.querySelector('[data-trainer-book]');
+    const aboutPanel = root.querySelector('[data-trainer-about]');
+
+    if (!prevCard || !activeCard || !previewsRoot || !prevButton || !nextButton || !lastNameElement || !firstNameElement || !aboutButton || !bookButton || !aboutPanel) return;
+
+    const total = data.trainers.length;
+    if (!total) return;
+
+    const normalizeIndex = (index) => (index % total + total) % total;
+    const getTrainerByIndex = (index) => data.trainers[normalizeIndex(index)];
+
+    const buildFrameMarkup = (trainer, variant) => `
+        <div class="trainer-frame__media trainer-frame__media--${variant}">
+            <img src="assets/images/${trainer.photo}" alt="${escapeHtml(trainer.fullName)}">
+        </div>
+    `;
+
+    const renderTrainerDetails = (trainer, keepExpanded = false) => {
+        const shouldExpand = keepExpanded && state.trainerShowcase.bioExpanded;
+
+        state.trainerShowcase.activeTrainerId = trainer.id;
+        state.trainerShowcase.bioExpanded = shouldExpand;
+
+        lastNameElement.textContent = trainer.lastName;
+        firstNameElement.textContent = trainer.firstName;
+        aboutPanel.innerHTML = buildTrainerAboutMarkup(trainer);
+        aboutPanel.hidden = !shouldExpand;
+        aboutButton.setAttribute('aria-expanded', String(shouldExpand));
+        aboutButton.classList.toggle('is-open', shouldExpand);
+    };
+
+    const renderScene = (keepExpanded = false) => {
+        const activeIndex = normalizeIndex(state.trainerShowcase.activeIndex || 0);
+        const activeTrainer = getTrainerByIndex(activeIndex);
+        const prevTrainer = getTrainerByIndex(activeIndex - 1);
+        const previews = [1, 2, 3].map(offset => ({
+            trainer: getTrainerByIndex(activeIndex + offset),
+            offset
+        }));
+
+        state.trainerShowcase.activeIndex = activeIndex;
+        prevCard.innerHTML = buildFrameMarkup(prevTrainer, 'ghost');
+        activeCard.innerHTML = buildFrameMarkup(activeTrainer, 'active');
+        activeCard.dataset.trainerId = activeTrainer.id;
+        prevCard.dataset.trainerId = prevTrainer.id;
+
+        previewsRoot.innerHTML = previews.map(({ trainer, offset }, previewIndex) => `
+            <button type="button" class="trainer-preview-card ${previewIndex === 0 ? 'trainer-preview-card--lead' : ''}" data-trainer-offset="${offset}" aria-label="Показать тренера ${escapeHtml(trainer.fullName)}">
+                <span class="trainer-preview-card__image">
+                    <img src="assets/images/${trainer.photo}" alt="${escapeHtml(trainer.fullName)}">
+                </span>
+            </button>
+        `).join('');
+
+        renderTrainerDetails(activeTrainer, keepExpanded);
+    };
+
+    const goTo = (nextIndex, keepExpanded = false) => {
+        state.trainerShowcase.activeIndex = normalizeIndex(nextIndex);
+        renderScene(keepExpanded);
+    };
+
+    state.trainerShowcase.activeIndex = normalizeIndex(
+        typeof state.trainerShowcase.activeIndex === 'number'
+            ? state.trainerShowcase.activeIndex
+            : 0
+    );
+    state.trainerShowcase.bioExpanded = false;
+
+    prevButton.addEventListener('click', () => {
+        goTo(state.trainerShowcase.activeIndex - 1);
     });
+
+    nextButton.addEventListener('click', () => {
+        goTo(state.trainerShowcase.activeIndex + 1);
+    });
+
+    prevCard.addEventListener('click', () => {
+        goTo(state.trainerShowcase.activeIndex - 1);
+    });
+
+    previewsRoot.addEventListener('click', (event) => {
+        const previewButton = event.target.closest('[data-trainer-offset]');
+        if (!previewButton) return;
+        const offset = Number(previewButton.dataset.trainerOffset || 0);
+        if (!offset) return;
+        goTo(state.trainerShowcase.activeIndex + offset);
+    });
+
+    let pointerStartX = 0;
+    activeCard.addEventListener('pointerdown', (event) => {
+        pointerStartX = event.clientX;
+    });
+
+    activeCard.addEventListener('pointerup', (event) => {
+        const deltaX = event.clientX - pointerStartX;
+        if (Math.abs(deltaX) < 40) return;
+        if (deltaX > 0) {
+            goTo(state.trainerShowcase.activeIndex - 1);
+        } else {
+            goTo(state.trainerShowcase.activeIndex + 1);
+        }
+    });
+
+    aboutButton.addEventListener('click', () => {
+        const nextExpanded = !state.trainerShowcase.bioExpanded;
+        state.trainerShowcase.bioExpanded = nextExpanded;
+        aboutPanel.hidden = !nextExpanded;
+        aboutButton.setAttribute('aria-expanded', String(nextExpanded));
+        aboutButton.classList.toggle('is-open', nextExpanded);
+    });
+
+    bookButton.addEventListener('click', () => {
+        const trainer = getTrainerByIndex(state.trainerShowcase.activeIndex);
+        openTrainerBookingModal(trainer);
+    });
+
+    renderScene();
+}
+
+function buildTrainerAboutMarkup(trainer) {
+    return `
+        <div class="trainer-about__block">
+            <span>О тренере</span>
+            <p>${trainer.bioLead}</p>
+        </div>
+        <div class="trainer-about__block">
+            <span>Стаж</span>
+            <p>${trainer.experience}</p>
+        </div>
+        <div class="trainer-about__block">
+            <span>Образование</span>
+            <ul>
+                ${trainer.education.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </ul>
+        </div>
+        <div class="trainer-about__block">
+            <span>Специализация</span>
+            <ul>
+                ${trainer.directions.map(item => `<li>${escapeHtml(item)}</li>`).join('')}
+            </ul>
+        </div>
+    `;
+}
+
+function ensureTrainerBookingModal() {
+    let modal = document.getElementById('trainer-booking-modal');
+    if (modal) return modal;
+
+    modal = document.createElement('div');
+    modal.className = 'modal trainer-booking-modal';
+    modal.id = 'trainer-booking-modal';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+        <div class="modal-content modal-content--trainer">
+            <div class="trainer-booking-card">
+                <button class="modal-close modal-close--trainer" type="button" data-trainer-modal-close aria-label="Закрыть">✕</button>
+                <p class="trainer-booking-card__kicker">Персональная тренировка</p>
+                <h2 class="trainer-booking-card__title">
+                    Записаться на тренировку
+                    <span data-trainer-modal-name></span>
+                </h2>
+                <p class="trainer-booking-card__subtitle" data-trainer-modal-role></p>
+
+                <form id="trainer-booking-form" class="trainer-booking-form" novalidate>
+                    <input type="hidden" name="trainerId">
+                    <input type="hidden" name="trainerName">
+
+                    <label class="trainer-booking-form__field">
+                        <span>Имя*</span>
+                        <input type="text" name="name" placeholder="Ваше имя" required>
+                    </label>
+
+                    <label class="trainer-booking-form__field">
+                        <span>Телефон*</span>
+                        <input type="tel" name="phone" placeholder="+7 (___) ___-__-__" required>
+                    </label>
+
+                    <label class="trainer-booking-form__consent">
+                        <input type="checkbox" name="consent" required>
+                        <span>Отправляя форму, вы даёте согласие на обработку персональных данных.</span>
+                    </label>
+
+                    <p class="trainer-booking-form__note">* Поля обязательны к заполнению</p>
+
+                    <button type="submit" class="trainer-booking-form__submit">отправить</button>
+                    <div class="form-message" data-trainer-modal-message></div>
+                </form>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    const closeButton = modal.querySelector('[data-trainer-modal-close]');
+    const form = modal.querySelector('#trainer-booking-form');
+    const nameInput = form.querySelector('input[name="name"]');
+    const phoneInput = form.querySelector('input[name="phone"]');
+
+    closeButton.addEventListener('click', closeTrainerBookingModal);
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) closeTrainerBookingModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+            closeTrainerBookingModal();
+        }
+    });
+
+    nameInput.addEventListener('input', debounce(function () {
+        this.value = this.value.replace(/[^a-zA-Zа-яА-ЯёЁ\s-]/g, '').slice(0, 40);
+    }, 200));
+
+    phoneInput.addEventListener('input', debounce(function () {
+        let digits = this.value.replace(/\D/g, '').slice(0, 11);
+        let result = '+7';
+
+        if (digits.length > 1) result += ' (' + digits.slice(1, 4);
+        if (digits.length >= 4) result += ') ' + digits.slice(4, 7);
+        if (digits.length >= 7) result += '-' + digits.slice(7, 9);
+        if (digits.length >= 9) result += '-' + digits.slice(9, 11);
+
+        this.value = result;
+    }, 200));
+
+    form.addEventListener('submit', handleTrainerBookingSubmit);
+
+    return modal;
+}
+
+function openTrainerBookingModal(trainer) {
+    const modal = ensureTrainerBookingModal();
+    const form = modal.querySelector('#trainer-booking-form');
+    const modalName = modal.querySelector('[data-trainer-modal-name]');
+    const modalRole = modal.querySelector('[data-trainer-modal-role]');
+    const message = modal.querySelector('[data-trainer-modal-message]');
+    const trainerIdField = form?.elements.namedItem('trainerId');
+    const trainerNameField = form?.elements.namedItem('trainerName');
+
+    if (!form || !modalName || !modalRole || !message || !trainerIdField || !trainerNameField) return;
+
+    state.trainerBooking.activeTrainerId = trainer.id;
+    state.trainerBooking.lastFocusedElement = document.activeElement;
+
+    modalName.textContent = `к ${trainer.bookingLabel}`;
+    modalRole.textContent = `${trainer.role} • ${trainer.experience}`;
+    form.reset();
+    trainerIdField.value = trainer.id;
+    trainerNameField.value = trainer.fullName;
+    message.textContent = '';
+    message.className = 'form-message';
+
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+
+    setTimeout(() => {
+        const nameInput = form.querySelector('input[name="name"]');
+        if (nameInput) nameInput.focus();
+    }, 80);
+}
+
+function closeTrainerBookingModal() {
+    const modal = document.getElementById('trainer-booking-modal');
+    if (!modal) return;
+
+    const form = modal.querySelector('#trainer-booking-form');
+    const message = modal.querySelector('[data-trainer-modal-message]');
+
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+
+    if (form) form.reset();
+    if (message) {
+        message.textContent = '';
+        message.className = 'form-message';
+    }
+
+    if (state.trainerBooking.lastFocusedElement) {
+        state.trainerBooking.lastFocusedElement.focus();
+    }
+}
+
+function handleTrainerBookingSubmit(event) {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const message = form.querySelector('[data-trainer-modal-message]');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const elements = form.elements;
+    const nameField = elements.namedItem('name');
+    const phoneField = elements.namedItem('phone');
+    const consentField = elements.namedItem('consent');
+    const trainerIdField = elements.namedItem('trainerId');
+    const trainerNameField = elements.namedItem('trainerName');
+
+    if (!message || !submitButton || !nameField || !phoneField || !consentField || !trainerIdField || !trainerNameField) {
+        return;
+    }
+
+    const cleanPhone = phoneField.value.replace(/\D/g, '');
+
+    message.textContent = '';
+    message.className = 'form-message';
+
+    if (nameField.value.trim().length < 2) {
+        message.textContent = 'Введите имя не короче 2 символов.';
+        message.classList.add('error');
+        return;
+    }
+
+    if (cleanPhone.length !== 11) {
+        message.textContent = 'Введите телефон полностью.';
+        message.classList.add('error');
+        return;
+    }
+
+    if (!consentField.checked) {
+        message.textContent = 'Подтвердите согласие на обработку данных.';
+        message.classList.add('error');
+        return;
+    }
+
+    submitButton.disabled = true;
+    submitButton.innerHTML = '<span class="button-loader"></span>';
+
+    setTimeout(() => {
+        services.requests.add({
+            name: nameField.value.trim(),
+            phone: cleanPhone,
+            source: 'trainer',
+            trainerId: trainerIdField.value,
+            trainerName: trainerNameField.value
+        });
+
+        message.textContent = `Заявка к тренеру ${trainerNameField.value} отправлена. Мы скоро свяжемся с вами.`;
+        message.className = 'form-message success';
+
+        submitButton.disabled = false;
+        submitButton.textContent = 'отправить';
+
+        setTimeout(() => {
+            closeTrainerBookingModal();
+        }, 1400);
+    }, 800);
 }
 
 /* ================= CONTACTS (сохранён UX: маска, debounce, draft, loader) ================= */
@@ -625,6 +1065,8 @@ function renderAdminList() {
 
         card.innerHTML = `
             <p><strong>${escapeHtml(req.name)}</strong> — ${escapeHtml(req.phone)}</p>
+            <p>Источник: ${req.source === 'trainer' ? 'запись к тренеру' : 'общая заявка'}</p>
+            ${req.trainerName ? `<p>Тренер: <strong>${escapeHtml(req.trainerName)}</strong></p>` : ''}
             <p>Статус: <span class="status">${req.status}</span></p>
             <button data-action="done" ${req.status === 'done' ? 'disabled' : ''}>✔ Обработано</button>
             <button data-action="delete">❌ Удалить</button>
