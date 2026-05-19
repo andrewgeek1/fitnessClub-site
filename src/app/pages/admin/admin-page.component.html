@@ -1,0 +1,31 @@
+<section id="admin" class="page page-shell active">
+  <h1>Заявки</h1>
+
+  <div class="admin-controls">
+    <button type="button" data-filter="all" (click)="setFilter('all')">Все</button>
+    <button type="button" data-filter="new" (click)="setFilter('new')">Новые</button>
+    <button type="button" data-filter="done" (click)="setFilter('done')">Обработанные</button>
+  </div>
+
+  <div id="admin-list">
+    @if (filteredRequests().length === 0) {
+      <p>Заявок нет</p>
+    } @else {
+      @for (request of filteredRequests(); track request.id) {
+        <div class="request-card" [attr.data-id]="request.id">
+          <p><strong>{{ request.name }}</strong> — {{ request.phone }}</p>
+          <p>Статус: <span class="status">{{ request.status }}</span></p>
+          <button
+            type="button"
+            data-done
+            [disabled]="request.status === 'done'"
+            (click)="markDone(request.id)"
+          >
+            ✔ Обработано
+          </button>
+          <button type="button" data-del (click)="delete(request.id)">❌ Удалить</button>
+        </div>
+      }
+    }
+  </div>
+</section>

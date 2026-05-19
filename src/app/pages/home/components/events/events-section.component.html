@@ -1,0 +1,25 @@
+<section class="home-block home-block--events" id="events">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Акции и события</h2>
+      <button class="outline-btn line-btn" type="button">Все события</button>
+    </div>
+    <div class="events-filters">
+      <button type="button" [class.is-active]="activeFilter() === 'all'" (click)="setFilter('all')">Все</button>
+      <button type="button" [class.is-active]="activeFilter() === 'promo'" (click)="setFilter('promo')">Акции</button>
+      <button type="button" [class.is-active]="activeFilter() === 'event'" (click)="setFilter('event')">
+        Мероприятия
+      </button>
+      <button type="button" [class.is-active]="activeFilter() === 'news'" (click)="setFilter('news')">Новости</button>
+    </div>
+    <div class="events-grid">
+      @for (event of events; track event.title) {
+        <article class="event-card" [class.is-hidden]="!isVisible(event.category)">
+          <div class="event-cover">{{ event.cover }}</div>
+          <p class="event-meta">{{ event.meta }}</p>
+          <h3>{{ event.title }}</h3>
+        </article>
+      }
+    </div>
+  </div>
+</section>

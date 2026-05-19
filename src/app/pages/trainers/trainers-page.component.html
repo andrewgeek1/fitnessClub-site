@@ -1,0 +1,14 @@
+<section id="trainers" class="page page-shell active">
+  <div class="container">
+    <h1>Тренеры</h1>
+    <div id="trainers-list">
+      @for (trainer of trainers; track trainer.name) {
+        <div class="trainer-card">
+          <img [src]="'assets/images/' + trainer.photo" [alt]="trainer.name">
+          <h3>{{ trainer.name }}</h3>
+          <p>{{ trainer.specialization }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>

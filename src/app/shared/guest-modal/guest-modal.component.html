@@ -1,0 +1,43 @@
+<div class="modal" id="guest-modal" [class.active]="isOpen()">
+  <div class="modal-content modal-content--guest">
+    <button class="modal-close" id="modal-close" type="button" aria-label="Закрыть" (click)="close()">
+      ✕
+    </button>
+    <div class="guest-modal-layout">
+      <div class="guest-modal-side guest-modal-side--brand">
+        <div class="guest-modal-brand">
+          <p class="guest-modal-logo">Fitness Club</p>
+        </div>
+      </div>
+      <div class="guest-modal-side guest-modal-side--form">
+        <div class="guest-modal-form-shell">
+          <p class="guest-modal-kicker">Заполните форму и мы перезвоним в ближайшее время</p>
+          <h2>Гостевой визит</h2>
+          <form id="guest-form" [formGroup]="form" (ngSubmit)="submit()">
+            <input #nameInput type="text" placeholder="Имя *" formControlName="name">
+            <input type="tel" placeholder="Телефон *" formControlName="phone">
+            <label class="guest-consent">
+              <input type="checkbox" id="guest-consent" formControlName="consent">
+              <span>Отправляя данную форму, вы даёте согласие на обработку персональных данных</span>
+            </label>
+            <p class="guest-form-note">* Поля обязательны к заполнению</p>
+            <button type="submit" [disabled]="loading()">
+              @if (loading()) {
+                <span class="button-loader"></span>
+              } @else {
+                Отправить
+              }
+            </button>
+            <div
+              class="form-message"
+              [class.success]="messageType() === 'success'"
+              [class.error]="messageType() === 'error'"
+            >
+              {{ messageText() }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.8.0
+2 info using node@v22.19.0
+3 silly config load:file:C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:C:\FugarovProjects\fitness-club\fitnessClub-site\.npmrc
+5 silly config load:file:C:\Users\Admin\.npmrc
+6 silly config load:file:C:\Users\Admin\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm exec @angular/cli@21.2.13 new ng-migration-temp --defaults --skip-git --style=scss --routing --standalone --package-manager npm
+8 verbose argv "exec" "--" "@angular/cli@21.2.13" "new" "ng-migration-temp" "--defaults" "--skip-git" "--style=scss" "--routing" "--standalone" "--package-manager" "npm"
+9 verbose logfile logs-max:10 dir:C:\FugarovProjects\fitness-club\fitnessClub-site\.npm-cache\_logs\2026-05-19T09_39_09_778Z-
+10 verbose logfile C:\FugarovProjects\fitness-club\fitnessClub-site\.npm-cache\_logs\2026-05-19T09_39_09_778Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 http fetch GET 200 https://registry.npmjs.org/npm 651ms
+14 http fetch GET 200 https://registry.npmjs.org/@angular%2fcli 840ms (cache miss)
+15 verbose type version
+16 verbose stack @angular/cli: No matching version found for @angular/cli@21.2.13.
+16 verbose stack     at module.exports (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\npm-pick-manifest\lib\index.js:210:23)
+16 verbose stack     at RegistryFetcher.manifest (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\pacote\lib\registry.js:130:54)
+16 verbose stack     at async getManifest (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\libnpmexec\lib\index.js:29:22)
+16 verbose stack     at async missingFromTree (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\libnpmexec\lib\index.js:64:22)
+16 verbose stack     at async C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\libnpmexec\lib\index.js:186:32
+16 verbose stack     at async Promise.all (index 0)
+16 verbose stack     at async exec (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\node_modules\libnpmexec\lib\index.js:184:3)
+16 verbose stack     at async Npm.exec (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\lib\npm.js:208:9)
+16 verbose stack     at async module.exports (C:\Users\Admin\AppData\Roaming\npm\node_modules\npm\lib\cli\entry.js:67:5)
+17 error code ETARGET
+18 error notarget No matching version found for @angular/cli@21.2.13.
+19 error notarget In most cases you or one of your dependencies are requesting
+19 error notarget a package version that doesn't exist.
+20 verbose cwd C:\FugarovProjects\fitness-club\fitnessClub-site
+21 verbose os Windows_NT 10.0.26200
+22 verbose node v22.19.0
+23 verbose npm  v11.8.0
+24 notice
+24 notice New minor version of npm available! 11.8.0 -> 11.14.1
+24 notice Changelog: https://github.com/npm/cli/releases/tag/v11.14.1
+24 notice To update run: npm install -g npm@11.14.1
+24 notice  { force: true, [Symbol(proc-log.meta)]: true }
+25 verbose exit 1
+26 verbose code 1
+27 error A complete log of this run can be found in: C:\FugarovProjects\fitness-club\fitnessClub-site\.npm-cache\_logs\2026-05-19T09_39_09_778Z-debug-0.log

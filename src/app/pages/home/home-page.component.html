@@ -1,0 +1,81 @@
+<section id="home" class="page active home-page">
+  <app-home-hero />
+
+  <section class="home-block home-block--light" id="home-about">
+    <div class="container about-grid">
+      <div>
+        <h2>О клубе</h2>
+        <p>
+          Удобное расположение, просторные зоны тренировок, профессиональная команда и поддержка на
+          каждом этапе.
+        </p>
+      </div>
+      <div class="about-metrics">
+        <article>
+          <strong>2500 м²</strong>
+          <span>Площадь клуба</span>
+        </article>
+        <article>
+          <strong>50+</strong>
+          <span>Групповых программ</span>
+        </article>
+        <article>
+          <strong>7/7</strong>
+          <span>Режим работы</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <app-faq-accordion />
+  <app-zone-gallery />
+  <app-club-cards />
+
+  <section class="home-block home-block--soft">
+    <div class="container">
+      <div class="mosaic-grid">
+        <a class="mosaic-tile mosaic-tile--schedule" routerLink="/schedule">
+          <h3>Расписание</h3>
+          <span class="line-btn">Посмотреть</span>
+        </a>
+        <a class="mosaic-tile mosaic-tile--about" href="/" (click)="scrollToSection($event, 'home-about')">
+          <h3>О клубе</h3>
+          <span class="line-btn">Подробнее</span>
+        </a>
+        <a class="mosaic-tile mosaic-tile--rules" href="/" (click)="scrollToSection($event, 'club-rules')">
+          <h3>Правила клуба</h3>
+          <span class="line-btn">Подробнее</span>
+        </a>
+        <a class="mosaic-tile mosaic-tile--team" routerLink="/trainers">
+          <h3>Тренеры</h3>
+          <span class="line-btn">Познакомиться</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-block home-block--light" id="club-rules">
+    <div class="container rule-box">
+      <h2 class="section-title">Правила клуба</h2>
+      <p>
+        Свод правил для членов клуба: пропускной режим, безопасные тренировки, порядок посещения зон и
+        форматы заморозки.
+      </p>
+      <a class="text-link" routerLink="/contacts">Уточнить детали у менеджера →</a>
+    </div>
+  </section>
+
+  <app-events-section />
+
+  <section class="home-block home-block--dark">
+    <div class="container cta-row">
+      <div>
+        <h2>Начните тренироваться уже сегодня</h2>
+        <p>Оставьте контакты - подберем формат занятий и удобный тариф.</p>
+      </div>
+      <button class="guest-btn guest-btn--light line-btn" type="button" (click)="openGuestModal()">
+        Заказать звонок
+      </button>
+    </div>
+  </section>
+</section>

@@ -1,0 +1,11 @@
+<section id="schedule" class="page page-shell active">
+  <h1>Расписание</h1>
+  @for (item of items; track item.day + item.time) {
+    <div class="schedule-card">
+      <h3>{{ item.day }}</h3>
+      <p>{{ item.time }}</p>
+      <p>{{ item.type }}</p>
+      <p>Тренер: {{ item.trainer }}</p>
+    </div>
+  }
+</section>

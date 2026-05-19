@@ -1,0 +1,78 @@
+<div class="top-bar">
+  <div class="container top-info">
+    <div>Нижний Новгород, пр. Гагарина, 35</div>
+    <div>8 (831) 2-172-172</div>
+    <div>Пн-Пт 6:30-23:00</div>
+  </div>
+</div>
+
+<header class="main-header">
+  <div class="container header-inner">
+    <div class="logo">
+      <a routerLink="/" (click)="scrollHome($event)">Fitness Club</a>
+    </div>
+
+    <nav class="main-nav">
+      <ul>
+        <li><a routerLink="/prices" routerLinkActive="active">Цены</a></li>
+        <li><a routerLink="/schedule" routerLinkActive="active">Расписание</a></li>
+        <li><a routerLink="/trainers" routerLinkActive="active">Тренеры</a></li>
+        <li><a routerLink="/contacts" routerLinkActive="active">Контакты</a></li>
+        <li class="nav-more" id="nav-more" [class.open]="menuOpen()">
+          <button
+            class="more-toggle"
+            id="more-toggle"
+            type="button"
+            [attr.aria-expanded]="menuOpen()"
+            aria-controls="menu-overlay"
+            (click)="toggleMenu()"
+          >
+            <span class="more-label">Ещё</span>
+            <span class="more-icon" aria-hidden="true"></span>
+          </button>
+        </li>
+      </ul>
+    </nav>
+
+    <button class="guest-btn line-btn" id="guest-btn" type="button" (click)="openGuestModal()">
+      Гостевой визит
+    </button>
+  </div>
+</header>
+
+<div class="menu-overlay" id="menu-overlay" [attr.aria-hidden]="!menuOpen()">
+  <div class="container menu-overlay__inner">
+    <nav class="menu-overlay__nav" aria-label="Дополнительная навигация">
+      <a class="menu-overlay__link" href="/" (click)="navigateToSection($event, 'home-about')">О клубе</a>
+      <a class="menu-overlay__link" routerLink="/schedule" (click)="closeMenu()">Расписание</a>
+      <a class="menu-overlay__link" href="/" (click)="navigateToSection($event, 'club-cards')">Клубные карты</a>
+      <a class="menu-overlay__link" href="/" (click)="navigateToSection($event, 'club-rules')">Правила</a>
+      <a class="menu-overlay__link" routerLink="/trainers" (click)="closeMenu()">Команда</a>
+      <a class="menu-overlay__link" href="/" (click)="navigateToSection($event, 'events')">Акции и события</a>
+      <a class="menu-overlay__link" routerLink="/schedule" (click)="closeMenu()">Тренировки</a>
+      <a class="menu-overlay__link" routerLink="/contacts" (click)="closeMenu()">Контакты</a>
+    </nav>
+
+    <div class="menu-overlay__footer">
+      <p class="menu-overlay__copyright">©2026 OCEANIS. Все права защищены</p>
+      <div class="menu-overlay__social" aria-label="Социальные сети клуба">
+        <a href="#" aria-label="VKontakte">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M4.7 7.9c.12 5.79 3.02 9.28 8.1 9.28h.3v-3.31c1.86.18 3.27 1.55 3.83 3.31h2.63c-.72-2.61-2.6-4.05-3.77-4.6 1.17-.67 2.81-2.3 3.2-4.68h-2.39c-.52 1.93-2.04 3.56-3.5 3.73V7.9h-2.39v6.53c-1.48-.37-3.35-2.12-3.43-6.53z"
+              fill="currentColor"
+            />
+          </svg>
+        </a>
+        <a href="#" aria-label="Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M20.67 4.33 3.88 10.8c-1.14.46-1.13 1.1-.21 1.38l4.31 1.34 1.66 5.08c.2.56.1.79.69.79.45 0 .65-.21.9-.46l2.08-2.03 4.32 3.19c.8.44 1.37.21 1.57-.74l2.86-13.47c.28-1.16-.43-1.69-1.39-1.25M9.3 13.2l8.42-5.31c.42-.26.8-.12.48.17l-6.94 6.27-.27 2.9z"
+              fill="currentColor"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

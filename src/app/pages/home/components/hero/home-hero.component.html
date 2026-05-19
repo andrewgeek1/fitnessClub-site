@@ -1,0 +1,29 @@
+<section class="home-block home-block--hero">
+  <div class="container">
+    <div class="hero-head">
+      <div class="hero-content">
+        <p class="hero-kicker" data-hero-kicker>{{ activeSlide().kicker }}</p>
+        <h1 data-hero-title [innerHTML]="activeSlide().title"></h1>
+        <p class="hero-lead" data-hero-lead>{{ activeSlide().lead }}</p>
+      </div>
+      <div #pagination class="hero-pagination swiper-pagination"></div>
+    </div>
+
+    <div #slider class="hero-slider swiper">
+      <div class="swiper-wrapper">
+        @for (slide of slides; track slide.image) {
+          <div
+            class="swiper-slide"
+            [attr.data-hero-kicker]="slide.kicker"
+            [attr.data-hero-title]="slide.title"
+            [attr.data-hero-lead]="slide.lead"
+          >
+            <div class="slide-card">
+              <img [src]="slide.image" [alt]="slide.alt">
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

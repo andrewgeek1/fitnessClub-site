@@ -1,0 +1,9 @@
+<section id="login" class="page page-shell active">
+  <h1>Вход</h1>
+  <form id="login-form" [formGroup]="form" (ngSubmit)="submit()">
+    <input formControlName="username" placeholder="Логин" required>
+    <input type="password" formControlName="password" placeholder="Пароль" required>
+    <button type="submit">Войти</button>
+  </form>
+  <div class="login-message" [class.error]="!!errorMessage()">{{ errorMessage() }}</div>
+</section>

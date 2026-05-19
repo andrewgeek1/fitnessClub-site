@@ -1,0 +1,16 @@
+<aside
+  class="call-widget"
+  id="call-widget"
+  aria-live="polite"
+  [attr.aria-hidden]="!visible()"
+  [class.is-visible]="visible()"
+>
+  <button class="call-widget__close" id="call-widget-close" type="button" aria-label="Закрыть" (click)="close()">
+    ✕
+  </button>
+  <p class="call-widget__title">Нужна консультация?</p>
+  <p class="call-widget__text">Подберем формат занятий и карту под вашу цель.</p>
+  <button class="call-widget__action line-btn" type="button" (click)="openGuestModal()">
+    Заказать звонок
+  </button>
+</aside>

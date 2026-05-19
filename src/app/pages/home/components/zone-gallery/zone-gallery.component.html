@@ -1,0 +1,40 @@
+<section class="home-block home-block--soft">
+  <div class="container">
+    <h2 class="section-title">Фото зала</h2>
+    <article class="zone-gallery" data-zone-gallery>
+      <div
+        #stage
+        class="zone-stage"
+        [class.is-hover]="isHover()"
+        tabindex="0"
+        aria-label="Галерея клуба. Нажмите слева для предыдущего фото, справа для следующего."
+        (pointerenter)="onPointerEnter($event)"
+        (pointerleave)="onPointerLeave()"
+        (pointermove)="onPointerMove($event)"
+        (click)="onClick($event)"
+        (keydown)="onKeydown($event)"
+      >
+        <div class="zone-slides">
+          @for (slide of slides; track slide.image; let index = $index) {
+            <figure
+              class="zone-slide"
+              [class.is-active]="currentIndex() === index"
+              [class.is-prev]="previousIndex() === index"
+              [class.is-next]="nextIndex() === index"
+            >
+              <img [src]="slide.image" [alt]="slide.alt" draggable="false">
+            </figure>
+          }
+        </div>
+        <div
+          class="zone-cursor"
+          aria-hidden="true"
+          [style.left.px]="cursorLeft()"
+          [style.top.px]="cursorTop()"
+        >
+          {{ cursorLabel() }}
+        </div>
+      </div>
+    </article>
+  </div>
+</section>

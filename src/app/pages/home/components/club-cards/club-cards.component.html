@@ -1,0 +1,22 @@
+<section class="home-block home-block--light" id="club-cards">
+  <div class="container">
+    <div class="section-head">
+      <h2 class="section-title">Клубные карты</h2>
+      <div class="cards-nav">
+        <button type="button" data-cards-nav="prev" aria-label="Назад" (click)="scroll('prev')">‹</button>
+        <button type="button" data-cards-nav="next" aria-label="Вперед" (click)="scroll('next')">›</button>
+      </div>
+    </div>
+    <div #track class="club-cards-track" id="club-cards-track">
+      @for (plan of plans; track plan.title) {
+        <article [attr.class]="'plan-card ' + plan.modifier">
+          <div class="plan-cover">{{ plan.cover }}</div>
+          <p class="plan-term">{{ plan.term }}</p>
+          <h3>{{ plan.title }}</h3>
+          <p>{{ plan.description }}</p>
+          <button class="plan-btn line-btn" type="button" (click)="openGuestModal()">Узнать стоимость</button>
+        </article>
+      }
+    </div>
+  </div>
+</section>

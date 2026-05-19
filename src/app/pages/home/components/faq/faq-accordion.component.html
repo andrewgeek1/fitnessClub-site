@@ -1,0 +1,23 @@
+<section class="home-block home-block--faq" id="faq">
+  <div class="container faq-layout">
+    <h2 class="section-title">Часто задаваемые вопросы</h2>
+    <div class="faq-list" id="faq-list">
+      @for (item of items; track item.question; let index = $index) {
+        <article class="faq-item" [class.is-open]="openIndex() === index">
+          <button
+            class="faq-trigger"
+            type="button"
+            [attr.aria-expanded]="openIndex() === index"
+            (click)="open(index)"
+          >
+            {{ item.question }}
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-panel" [style.maxHeight]="panelStyle(index)">
+            <p>{{ item.answer }}</p>
+          </div>
+        </article>
+      }
+    </div>
+  </div>
+</section>

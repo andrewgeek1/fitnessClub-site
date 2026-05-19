@@ -1,0 +1,10 @@
+<section id="prices" class="page page-shell active">
+  <h1>Цены</h1>
+  @for (subscription of subscriptions; track subscription.name) {
+    <div class="price-card">
+      <h3>{{ subscription.name }}</h3>
+      <p>{{ subscription.duration }}</p>
+      <p>{{ subscription.price }} ₽</p>
+    </div>
+  }
+</section>
