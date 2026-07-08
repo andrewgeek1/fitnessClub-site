@@ -342,23 +342,58 @@
 
         <section class="home-block home-block--soft">
             <div class="container">
-                <div class="mosaic-grid">
-                    <a class="mosaic-tile mosaic-tile--schedule" href="#schedule">
-                        <h3>Расписание</h3>
-                        <span class="line-btn">Посмотреть</span>
+                <div class="nav-tiles">
+
+                    <!-- ПЛИТКА 1: РАСПИСАНИЕ -->
+                    <!-- Место для фото: когда фото будет готово (с надписью "Расписание"),
+                         добавьте в тег <a> ниже style="background-image:url('assets/images/ИМЯ-ФАЙЛА.jpg')" -->
+                    <a class="nav-tile nav-tile--dark" href="#schedule">
+                        <span class="nav-tile__cta">
+                            Посмотреть
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                     </a>
-                    <a class="mosaic-tile mosaic-tile--about" href="#home" data-scroll-to="home-about">
-                        <h3>О клубе</h3>
-                        <span class="line-btn">Подробнее</span>
+
+                    <!-- ПЛИТКА 2: О КЛУБЕ -->
+                    <!-- Место для фото: когда фото будет готово (с надписью "О клубе"),
+                         добавьте в тег <a> ниже style="background-image:url('assets/images/ИМЯ-ФАЙЛА.jpg')" -->
+                    <!-- Ссылка "#" временная — страница "О клубе" будет сделана позже -->
+                    <a class="nav-tile nav-tile--light" href="#">
+                        <span class="nav-tile__cta">
+                            Подробнее
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                     </a>
-                    <a class="mosaic-tile mosaic-tile--rules" href="#home" data-scroll-to="club-rules">
-                        <h3>Правила клуба</h3>
-                        <span class="line-btn">Подробнее</span>
+
+                    <!-- ПЛИТКА 3: ПРАВИЛА КЛУБА -->
+                    <!-- Место для фото: когда фото будет готово (с надписью "Правила клуба"),
+                         добавьте в тег <a> ниже style="background-image:url('assets/images/ИМЯ-ФАЙЛА.jpg')" -->
+                    <!-- Ссылка "#" временная — страница "Правила клуба" будет сделана позже -->
+                    <a class="nav-tile nav-tile--light" href="#">
+                        <span class="nav-tile__cta">
+                            Подробнее
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                     </a>
-                    <a class="mosaic-tile mosaic-tile--team" href="#trainers">
-                        <h3>Тренеры</h3>
-                        <span class="line-btn">Познакомиться</span>
+
+                    <!-- ПЛИТКА 4: КОМАНДА / ТРЕНЕРЫ -->
+                    <!-- Место для фото: когда фото будет готово (с надписью "Команда"),
+                         добавьте в тег <a> ниже style="background-image:url('assets/images/ИМЯ-ФАЙЛА.jpg')" -->
+                    <a class="nav-tile nav-tile--accent" href="#trainers">
+                        <span class="nav-tile__cta">
+                            Познакомиться
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 7H11M11 7L7.5 3.5M11 7L7.5 10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
                     </a>
+
                 </div>
             </div>
         </section>
@@ -375,7 +410,7 @@
             <div class="container">
                 <div class="section-head">
                     <h2 class="section-title">Акции и события</h2>
-                    <button class="outline-btn line-btn" type="button">Все события</button>
+                    <button class="outline-btn" type="button">Все события</button>
                 </div>
                 <div class="events-filters">
                     <button class="is-active" type="button" data-event-filter="all">Все</button>
@@ -384,26 +419,59 @@
                     <button type="button" data-event-filter="news">Новости</button>
                 </div>
                 <div class="events-grid">
-                    <article class="event-card" data-event-cat="news">
-                        <div class="event-cover">Заявление на справку для вычета</div>
+
+                    <!-- ЗАМЕНИТЕ src на картинке ниже на свою (когда фото будет готово) -->
+                    <article class="event-card" data-event-cat="news" data-event-open tabindex="0" role="button"
+                        data-event-meta="Новости • 18 февраля 2026"
+                        data-event-title="Получение справки для налогового вычета"
+                        data-event-desc="Оформите справку для налогового вычета по расходам на физкультурно-оздоровительные услуги. Обратитесь на ресепшн клуба или оставьте заявку — подготовим документ в течение нескольких рабочих дней."
+                        data-event-img="assets/images/1.jpg">
+                        <div class="event-cover">
+                            <img src="assets/images/1.jpg" alt="Получение справки для налогового вычета">
+                        </div>
                         <p class="event-meta">Новости • 18 февраля 2026</p>
-                        <h3>Получение справки для налогового вычета</h3>
+                        <h3 class="event-title">Получение справки для налогового вычета</h3>
                     </article>
-                    <article class="event-card" data-event-cat="news">
-                        <div class="event-cover">Положение о предоставлении справок об оплате</div>
+
+                    <!-- ЗАМЕНИТЕ src на картинке ниже на свою (когда фото будет готово) -->
+                    <article class="event-card" data-event-cat="news" data-event-open tabindex="0" role="button"
+                        data-event-meta="Новости • 31 января 2026"
+                        data-event-title="Порядок выдачи справок об оплате физкультурных услуг"
+                        data-event-desc="Ознакомьтесь с порядком и сроками выдачи справок об оплате физкультурно-оздоровительных услуг для отчётности и налогового вычета."
+                        data-event-img="assets/images/2.jpg">
+                        <div class="event-cover">
+                            <img src="assets/images/2.jpg" alt="Порядок выдачи справок об оплате физкультурных услуг">
+                        </div>
                         <p class="event-meta">Новости • 31 января 2026</p>
-                        <h3>Порядок выдачи справок об оплате физкультурных услуг</h3>
+                        <h3 class="event-title">Порядок выдачи справок об оплате физкультурных услуг</h3>
                     </article>
-                    <article class="event-card" data-event-cat="promo">
-                        <div class="event-cover">Скидка 20% на персональные тренировки</div>
-                        <p class="event-meta">Акции • 5 марта 2026</p>
-                        <h3>Пакет PT-10 со скидкой при покупке клубной карты</h3>
+
+                    <!-- ЗАМЕНИТЕ src на картинке ниже на свою (когда фото будет готово) -->
+                    <article class="event-card" data-event-cat="promo" data-event-open tabindex="0" role="button"
+                        data-event-meta="Акция • 5 марта 2026"
+                        data-event-title="Пакет PT-10 со скидкой при покупке клубной карты"
+                        data-event-desc="При покупке клубной карты — пакет из 10 персональных тренировок со скидкой. Количество мест ограничено, подробности уточняйте у администратора клуба."
+                        data-event-img="assets/images/3.jpg">
+                        <div class="event-cover">
+                            <img src="assets/images/3.jpg" alt="Пакет PT-10 со скидкой при покупке клубной карты">
+                        </div>
+                        <p class="event-meta">Акция • 5 марта 2026</p>
+                        <h3 class="event-title">Пакет PT-10 со скидкой при покупке клубной карты</h3>
                     </article>
-                    <article class="event-card" data-event-cat="event">
-                        <div class="event-cover">Открытая функциональная тренировка</div>
+
+                    <!-- ЗАМЕНИТЕ src на картинке ниже на свою (когда фото будет готово) -->
+                    <article class="event-card" data-event-cat="event" data-event-open tabindex="0" role="button"
+                        data-event-meta="Мероприятия • 12 марта 2026"
+                        data-event-title="Групповая тренировка с ведущими тренерами клуба"
+                        data-event-desc="Открытая функциональная тренировка с ведущими тренерами клуба — подходит для любого уровня подготовки. Записывайтесь заранее, количество мест ограничено."
+                        data-event-img="assets/images/4.jpg">
+                        <div class="event-cover">
+                            <img src="assets/images/4.jpg" alt="Групповая тренировка с ведущими тренерами клуба">
+                        </div>
                         <p class="event-meta">Мероприятия • 12 марта 2026</p>
-                        <h3>Групповая тренировка с ведущими тренерами клуба</h3>
+                        <h3 class="event-title">Групповая тренировка с ведущими тренерами клуба</h3>
                     </article>
+
                 </div>
             </div>
         </section>
@@ -437,6 +505,32 @@
     <section id="login" class="page page-shell"></section>
     <section id="admin" class="page page-shell"></section>
 </main>
+
+<!-- Модальное окно с подробностями акции/события. Открывается по клику на любую карточку выше. -->
+<div class="modal" id="event-modal">
+    <div class="modal-content modal-content--event">
+        <button class="modal-close modal-close--event" type="button" data-event-modal-close aria-label="Закрыть">✕</button>
+        <div class="event-modal-inner">
+            <button class="event-modal-back" type="button" data-event-modal-close>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M13 8H3M3 8L7.5 3.5M3 8L7.5 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Вернуться к списку
+            </button>
+            <div class="event-modal-layout">
+                <div class="event-modal-cover">
+                    <img data-event-modal-img src="" alt="">
+                </div>
+                <div class="event-modal-text">
+                    <p class="event-modal-meta" data-event-modal-meta></p>
+                    <h3 class="event-modal-title" data-event-modal-title></h3>
+                    <p class="event-modal-desc" data-event-modal-desc></p>
+                    <button class="event-modal-cta" type="button" data-open-modal="guest" data-event-modal-cta>Обратная связь</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal" id="guest-modal">
     <div class="modal-content modal-content--guest">

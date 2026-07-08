@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initZoneGallery();
     initClubCardsNavigation();
     initEventFilters();
+    initEventDetails();
     initCallWidget();
 });
 
@@ -918,6 +919,77 @@ function initEventFilters() {
     });
 }
 
+/* Открывает модалку #event-modal с подробностями по клику на карточку .event-card
+   (карточки должны иметь атрибут data-event-open и data-event-* с данными).
+   Кнопка "Обратная связь" внутри модалки использует data-open-modal="guest" —
+   поэтому гостевая форма открывается тем же кодом, что и кнопка "Гостевой визит". */
+function initEventDetails() {
+    const cards = document.querySelectorAll('[data-event-open]');
+    const modal = document.getElementById('event-modal');
+    const guestModal = document.getElementById('guest-modal');
+
+    if (!cards.length || !modal) return;
+
+    const closeTriggers = modal.querySelectorAll('[data-event-modal-close]');
+    const imgEl = modal.querySelector('[data-event-modal-img]');
+    const metaEl = modal.querySelector('[data-event-modal-meta]');
+    const titleEl = modal.querySelector('[data-event-modal-title]');
+    const descEl = modal.querySelector('[data-event-modal-desc]');
+    const feedbackButton = modal.querySelector('[data-event-modal-cta]');
+
+    function openEventModal(card) {
+        imgEl.src = card.dataset.eventImg || '';
+        imgEl.alt = card.dataset.eventTitle || '';
+        metaEl.textContent = card.dataset.eventMeta || '';
+        titleEl.textContent = card.dataset.eventTitle || '';
+        descEl.textContent = card.dataset.eventDesc || '';
+
+        modal.classList.add('active');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeEventModal() {
+        modal.classList.remove('active');
+        // если гостевая форма уже открылась поверх (кнопка "Обратная связь"),
+        // не снимаем блокировку скролла — она нужна для гостевой модалки
+        if (!guestModal || !guestModal.classList.contains('active')) {
+            document.body.classList.remove('modal-open');
+        }
+    }
+
+    cards.forEach(card => {
+        card.addEventListener('click', () => openEventModal(card));
+        card.addEventListener('keydown', e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openEventModal(card);
+            }
+        });
+    });
+
+    closeTriggers.forEach(trigger => {
+        trigger.addEventListener('click', closeEventModal);
+    });
+
+    if (feedbackButton) {
+        feedbackButton.addEventListener('click', e => {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            modal.classList.remove('active');
+
+            if (typeof window.openGuestModal === 'function') {
+                window.openGuestModal('Обратная связь');
+            }
+        });
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeEventModal();
+        }
+    });
+}
+
 function initCallWidget() {
     const widget = document.getElementById('call-widget');
     const closeButton = document.getElementById('call-widget-close');
@@ -971,6 +1043,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("guest-modal");
     const closeBtn = document.getElementById("modal-close");
     const form = document.getElementById("guest-form");
+    const modalTitle = modal ? modal.querySelector(".guest-modal-form-shell h2") : null;
 
     if (!guestButtons.length || !modal || !form) return;
 
@@ -983,16 +1056,21 @@ document.addEventListener("DOMContentLoaded", () => {
     form.appendChild(message);
     let lastFocusedElement = null;
 
-    function openModal() {
+    function openModal(title = 'Гостевой визит') {
         lastFocusedElement = document.activeElement;
+        if (modalTitle) {
+            modalTitle.textContent = title;
+        }
         modal.classList.add("active");
         document.body.classList.add("modal-open");
 
-        setTimeout(() => nameInput.focus(), 100);
+        nameInput.focus();
     }
 
+    window.openGuestModal = openModal;
+
     guestButtons.forEach(button => {
-        button.addEventListener("click", openModal);
+        button.addEventListener("click", () => openModal('Гостевой визит'));
     });
 
     function closeModal(){
